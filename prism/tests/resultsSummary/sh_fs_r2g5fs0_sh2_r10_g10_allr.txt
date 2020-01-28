@@ -1,0 +1,3 @@
+fn	r	g	d	f	l	p	t	c	tT	firstSolT	allReplanningT
+sh2_r10_g10_fs0_fsp_0_0_	2	5	0	0	ssi	1.0	4.0	22.0	1644.0	1644.0	0.0
+sh2_r10_g10_fs0_fsp_0_0_	2	5	0	0	stapu	1.0	4.0	22.0	650.0	649.0	0.0

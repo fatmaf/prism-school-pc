@@ -1,0 +1,220 @@
+r10_g10_a1_grid_11_fsp_100_2_
+r:4 [6, 4, 1, 0]	g:9 [0, 5, 1, 7, 3, 2, 4, 6]
+java.lang.NullPointerException
+	at demos.CompareSTAPUSSINVI.doSTAPU(CompareSTAPUSSINVI.java:118)
+	at demos.CompareSTAPUSSINVI.doSTAPUTime(CompareSTAPUSSINVI.java:159)
+	at demos.CompareSTAPUSSINVI.doCompare(CompareSTAPUSSINVI.java:240)
+	at demos.CompareSTAPUSSINVI.runGridStates(CompareSTAPUSSINVI.java:1068)
+	at demos.CompareSTAPUSSINVI.run(CompareSTAPUSSINVI.java:577)
+	at demos.CompareSTAPUSSINVI.main(CompareSTAPUSSINVI.java:1163)
+
+r10_g10_a1_grid_11_fsp_0_0_
+java.lang.Exception: Can not generate 10 unique numbers from a range of 9
+	at demos.CompareSTAPUSSINVI.generateListOfRandomNumbers(CompareSTAPUSSINVI.java:522)
+	at demos.CompareSTAPUSSINVI.runGridStates(CompareSTAPUSSINVI.java:1052)
+	at demos.CompareSTAPUSSINVI.run(CompareSTAPUSSINVI.java:577)
+	at demos.CompareSTAPUSSINVI.main(CompareSTAPUSSINVI.java:1163)
+
+r10_g10_a1_grid_11_fsp_0_1_
+java.lang.Exception: Can not generate 10 unique numbers from a range of 9
+	at demos.CompareSTAPUSSINVI.generateListOfRandomNumbers(CompareSTAPUSSINVI.java:522)
+	at demos.CompareSTAPUSSINVI.runGridStates(CompareSTAPUSSINVI.java:1052)
+	at demos.CompareSTAPUSSINVI.run(CompareSTAPUSSINVI.java:577)
+	at demos.CompareSTAPUSSINVI.main(CompareSTAPUSSINVI.java:1163)
+
+r10_g10_a1_grid_11_fsp_0_2_
+java.lang.Exception: Can not generate 10 unique numbers from a range of 9
+	at demos.CompareSTAPUSSINVI.generateListOfRandomNumbers(CompareSTAPUSSINVI.java:522)
+	at demos.CompareSTAPUSSINVI.runGridStates(CompareSTAPUSSINVI.java:1052)
+	at demos.CompareSTAPUSSINVI.run(CompareSTAPUSSINVI.java:577)
+	at demos.CompareSTAPUSSINVI.main(CompareSTAPUSSINVI.java:1163)
+
+r10_g10_a1_grid_11_fsp_0_3_
+java.lang.Exception: Can not generate 10 unique numbers from a range of 9
+	at demos.CompareSTAPUSSINVI.generateListOfRandomNumbers(CompareSTAPUSSINVI.java:522)
+	at demos.CompareSTAPUSSINVI.runGridStates(CompareSTAPUSSINVI.java:1052)
+	at demos.CompareSTAPUSSINVI.run(CompareSTAPUSSINVI.java:577)
+	at demos.CompareSTAPUSSINVI.main(CompareSTAPUSSINVI.java:1163)
+
+r10_g10_a1_grid_11_fsp_0_4_
+java.lang.Exception: Can not generate 10 unique numbers from a range of 9
+	at demos.CompareSTAPUSSINVI.generateListOfRandomNumbers(CompareSTAPUSSINVI.java:522)
+	at demos.CompareSTAPUSSINVI.runGridStates(CompareSTAPUSSINVI.java:1052)
+	at demos.CompareSTAPUSSINVI.run(CompareSTAPUSSINVI.java:577)
+	at demos.CompareSTAPUSSINVI.main(CompareSTAPUSSINVI.java:1163)
+
+r10_g10_a1_grid_11_fsp_0_5_
+java.lang.Exception: Can not generate 10 unique numbers from a range of 9
+	at demos.CompareSTAPUSSINVI.generateListOfRandomNumbers(CompareSTAPUSSINVI.java:522)
+	at demos.CompareSTAPUSSINVI.runGridStates(CompareSTAPUSSINVI.java:1052)
+	at demos.CompareSTAPUSSINVI.run(CompareSTAPUSSINVI.java:577)
+	at demos.CompareSTAPUSSINVI.main(CompareSTAPUSSINVI.java:1163)
+
+r10_g10_a1_grid_11_fsp_0_6_
+java.lang.Exception: Can not generate 10 unique numbers from a range of 9
+	at demos.CompareSTAPUSSINVI.generateListOfRandomNumbers(CompareSTAPUSSINVI.java:522)
+	at demos.CompareSTAPUSSINVI.runGridStates(CompareSTAPUSSINVI.java:1052)
+	at demos.CompareSTAPUSSINVI.run(CompareSTAPUSSINVI.java:577)
+	at demos.CompareSTAPUSSINVI.main(CompareSTAPUSSINVI.java:1163)
+
+r10_g10_a1_grid_11_fsp_0_7_
+java.lang.Exception: Can not generate 10 unique numbers from a range of 9
+	at demos.CompareSTAPUSSINVI.generateListOfRandomNumbers(CompareSTAPUSSINVI.java:522)
+	at demos.CompareSTAPUSSINVI.runGridStates(CompareSTAPUSSINVI.java:1052)
+	at demos.CompareSTAPUSSINVI.run(CompareSTAPUSSINVI.java:577)
+	at demos.CompareSTAPUSSINVI.main(CompareSTAPUSSINVI.java:1163)
+
+r10_g10_a1_grid_11_fsp_0_8_
+java.lang.Exception: Can not generate 10 unique numbers from a range of 9
+	at demos.CompareSTAPUSSINVI.generateListOfRandomNumbers(CompareSTAPUSSINVI.java:522)
+	at demos.CompareSTAPUSSINVI.runGridStates(CompareSTAPUSSINVI.java:1052)
+	at demos.CompareSTAPUSSINVI.run(CompareSTAPUSSINVI.java:577)
+	at demos.CompareSTAPUSSINVI.main(CompareSTAPUSSINVI.java:1163)
+
+r10_g10_a1_grid_11_fsp_0_9_
+java.lang.Exception: Can not generate 10 unique numbers from a range of 9
+	at demos.CompareSTAPUSSINVI.generateListOfRandomNumbers(CompareSTAPUSSINVI.java:522)
+	at demos.CompareSTAPUSSINVI.runGridStates(CompareSTAPUSSINVI.java:1052)
+	at demos.CompareSTAPUSSINVI.run(CompareSTAPUSSINVI.java:577)
+	at demos.CompareSTAPUSSINVI.main(CompareSTAPUSSINVI.java:1163)
+
+r10_g10_a1_grid_11_fsp_50_0_
+java.lang.Exception: Can not generate 10 unique numbers from a range of 9
+	at demos.CompareSTAPUSSINVI.generateListOfRandomNumbers(CompareSTAPUSSINVI.java:522)
+	at demos.CompareSTAPUSSINVI.runGridStates(CompareSTAPUSSINVI.java:1052)
+	at demos.CompareSTAPUSSINVI.run(CompareSTAPUSSINVI.java:577)
+	at demos.CompareSTAPUSSINVI.main(CompareSTAPUSSINVI.java:1163)
+
+r10_g10_a1_grid_11_fsp_50_1_
+java.lang.Exception: Can not generate 10 unique numbers from a range of 9
+	at demos.CompareSTAPUSSINVI.generateListOfRandomNumbers(CompareSTAPUSSINVI.java:522)
+	at demos.CompareSTAPUSSINVI.runGridStates(CompareSTAPUSSINVI.java:1052)
+	at demos.CompareSTAPUSSINVI.run(CompareSTAPUSSINVI.java:577)
+	at demos.CompareSTAPUSSINVI.main(CompareSTAPUSSINVI.java:1163)
+
+r10_g10_a1_grid_11_fsp_50_2_
+java.lang.Exception: Can not generate 10 unique numbers from a range of 9
+	at demos.CompareSTAPUSSINVI.generateListOfRandomNumbers(CompareSTAPUSSINVI.java:522)
+	at demos.CompareSTAPUSSINVI.runGridStates(CompareSTAPUSSINVI.java:1052)
+	at demos.CompareSTAPUSSINVI.run(CompareSTAPUSSINVI.java:577)
+	at demos.CompareSTAPUSSINVI.main(CompareSTAPUSSINVI.java:1163)
+
+r10_g10_a1_grid_11_fsp_50_3_
+java.lang.Exception: Can not generate 10 unique numbers from a range of 9
+	at demos.CompareSTAPUSSINVI.generateListOfRandomNumbers(CompareSTAPUSSINVI.java:522)
+	at demos.CompareSTAPUSSINVI.runGridStates(CompareSTAPUSSINVI.java:1052)
+	at demos.CompareSTAPUSSINVI.run(CompareSTAPUSSINVI.java:577)
+	at demos.CompareSTAPUSSINVI.main(CompareSTAPUSSINVI.java:1163)
+
+r10_g10_a1_grid_11_fsp_50_4_
+java.lang.Exception: Can not generate 10 unique numbers from a range of 9
+	at demos.CompareSTAPUSSINVI.generateListOfRandomNumbers(CompareSTAPUSSINVI.java:522)
+	at demos.CompareSTAPUSSINVI.runGridStates(CompareSTAPUSSINVI.java:1052)
+	at demos.CompareSTAPUSSINVI.run(CompareSTAPUSSINVI.java:577)
+	at demos.CompareSTAPUSSINVI.main(CompareSTAPUSSINVI.java:1163)
+
+r10_g10_a1_grid_11_fsp_50_5_
+java.lang.Exception: Can not generate 10 unique numbers from a range of 9
+	at demos.CompareSTAPUSSINVI.generateListOfRandomNumbers(CompareSTAPUSSINVI.java:522)
+	at demos.CompareSTAPUSSINVI.runGridStates(CompareSTAPUSSINVI.java:1052)
+	at demos.CompareSTAPUSSINVI.run(CompareSTAPUSSINVI.java:577)
+	at demos.CompareSTAPUSSINVI.main(CompareSTAPUSSINVI.java:1163)
+
+r10_g10_a1_grid_11_fsp_50_6_
+java.lang.Exception: Can not generate 10 unique numbers from a range of 9
+	at demos.CompareSTAPUSSINVI.generateListOfRandomNumbers(CompareSTAPUSSINVI.java:522)
+	at demos.CompareSTAPUSSINVI.runGridStates(CompareSTAPUSSINVI.java:1052)
+	at demos.CompareSTAPUSSINVI.run(CompareSTAPUSSINVI.java:577)
+	at demos.CompareSTAPUSSINVI.main(CompareSTAPUSSINVI.java:1163)
+
+r10_g10_a1_grid_11_fsp_50_7_
+java.lang.Exception: Can not generate 10 unique numbers from a range of 9
+	at demos.CompareSTAPUSSINVI.generateListOfRandomNumbers(CompareSTAPUSSINVI.java:522)
+	at demos.CompareSTAPUSSINVI.runGridStates(CompareSTAPUSSINVI.java:1052)
+	at demos.CompareSTAPUSSINVI.run(CompareSTAPUSSINVI.java:577)
+	at demos.CompareSTAPUSSINVI.main(CompareSTAPUSSINVI.java:1163)
+
+r10_g10_a1_grid_11_fsp_50_8_
+java.lang.Exception: Can not generate 10 unique numbers from a range of 9
+	at demos.CompareSTAPUSSINVI.generateListOfRandomNumbers(CompareSTAPUSSINVI.java:522)
+	at demos.CompareSTAPUSSINVI.runGridStates(CompareSTAPUSSINVI.java:1052)
+	at demos.CompareSTAPUSSINVI.run(CompareSTAPUSSINVI.java:577)
+	at demos.CompareSTAPUSSINVI.main(CompareSTAPUSSINVI.java:1163)
+
+r10_g10_a1_grid_11_fsp_50_9_
+java.lang.Exception: Can not generate 10 unique numbers from a range of 9
+	at demos.CompareSTAPUSSINVI.generateListOfRandomNumbers(CompareSTAPUSSINVI.java:522)
+	at demos.CompareSTAPUSSINVI.runGridStates(CompareSTAPUSSINVI.java:1052)
+	at demos.CompareSTAPUSSINVI.run(CompareSTAPUSSINVI.java:577)
+	at demos.CompareSTAPUSSINVI.main(CompareSTAPUSSINVI.java:1163)
+
+r10_g10_a1_grid_11_fsp_100_0_
+java.lang.Exception: Can not generate 10 unique numbers from a range of 9
+	at demos.CompareSTAPUSSINVI.generateListOfRandomNumbers(CompareSTAPUSSINVI.java:522)
+	at demos.CompareSTAPUSSINVI.runGridStates(CompareSTAPUSSINVI.java:1052)
+	at demos.CompareSTAPUSSINVI.run(CompareSTAPUSSINVI.java:577)
+	at demos.CompareSTAPUSSINVI.main(CompareSTAPUSSINVI.java:1163)
+
+r10_g10_a1_grid_11_fsp_100_1_
+java.lang.Exception: Can not generate 10 unique numbers from a range of 9
+	at demos.CompareSTAPUSSINVI.generateListOfRandomNumbers(CompareSTAPUSSINVI.java:522)
+	at demos.CompareSTAPUSSINVI.runGridStates(CompareSTAPUSSINVI.java:1052)
+	at demos.CompareSTAPUSSINVI.run(CompareSTAPUSSINVI.java:577)
+	at demos.CompareSTAPUSSINVI.main(CompareSTAPUSSINVI.java:1163)
+
+r10_g10_a1_grid_11_fsp_100_2_
+java.lang.Exception: Can not generate 10 unique numbers from a range of 9
+	at demos.CompareSTAPUSSINVI.generateListOfRandomNumbers(CompareSTAPUSSINVI.java:522)
+	at demos.CompareSTAPUSSINVI.runGridStates(CompareSTAPUSSINVI.java:1052)
+	at demos.CompareSTAPUSSINVI.run(CompareSTAPUSSINVI.java:577)
+	at demos.CompareSTAPUSSINVI.main(CompareSTAPUSSINVI.java:1163)
+
+r10_g10_a1_grid_11_fsp_100_3_
+java.lang.Exception: Can not generate 10 unique numbers from a range of 9
+	at demos.CompareSTAPUSSINVI.generateListOfRandomNumbers(CompareSTAPUSSINVI.java:522)
+	at demos.CompareSTAPUSSINVI.runGridStates(CompareSTAPUSSINVI.java:1052)
+	at demos.CompareSTAPUSSINVI.run(CompareSTAPUSSINVI.java:577)
+	at demos.CompareSTAPUSSINVI.main(CompareSTAPUSSINVI.java:1163)
+
+r10_g10_a1_grid_11_fsp_100_4_
+java.lang.Exception: Can not generate 10 unique numbers from a range of 9
+	at demos.CompareSTAPUSSINVI.generateListOfRandomNumbers(CompareSTAPUSSINVI.java:522)
+	at demos.CompareSTAPUSSINVI.runGridStates(CompareSTAPUSSINVI.java:1052)
+	at demos.CompareSTAPUSSINVI.run(CompareSTAPUSSINVI.java:577)
+	at demos.CompareSTAPUSSINVI.main(CompareSTAPUSSINVI.java:1163)
+
+r10_g10_a1_grid_11_fsp_100_5_
+java.lang.Exception: Can not generate 10 unique numbers from a range of 9
+	at demos.CompareSTAPUSSINVI.generateListOfRandomNumbers(CompareSTAPUSSINVI.java:522)
+	at demos.CompareSTAPUSSINVI.runGridStates(CompareSTAPUSSINVI.java:1052)
+	at demos.CompareSTAPUSSINVI.run(CompareSTAPUSSINVI.java:577)
+	at demos.CompareSTAPUSSINVI.main(CompareSTAPUSSINVI.java:1163)
+
+r10_g10_a1_grid_11_fsp_100_6_
+java.lang.Exception: Can not generate 10 unique numbers from a range of 9
+	at demos.CompareSTAPUSSINVI.generateListOfRandomNumbers(CompareSTAPUSSINVI.java:522)
+	at demos.CompareSTAPUSSINVI.runGridStates(CompareSTAPUSSINVI.java:1052)
+	at demos.CompareSTAPUSSINVI.run(CompareSTAPUSSINVI.java:577)
+	at demos.CompareSTAPUSSINVI.main(CompareSTAPUSSINVI.java:1163)
+
+r10_g10_a1_grid_11_fsp_100_7_
+java.lang.Exception: Can not generate 10 unique numbers from a range of 9
+	at demos.CompareSTAPUSSINVI.generateListOfRandomNumbers(CompareSTAPUSSINVI.java:522)
+	at demos.CompareSTAPUSSINVI.runGridStates(CompareSTAPUSSINVI.java:1052)
+	at demos.CompareSTAPUSSINVI.run(CompareSTAPUSSINVI.java:577)
+	at demos.CompareSTAPUSSINVI.main(CompareSTAPUSSINVI.java:1163)
+
+r10_g10_a1_grid_11_fsp_100_8_
+java.lang.Exception: Can not generate 10 unique numbers from a range of 9
+	at demos.CompareSTAPUSSINVI.generateListOfRandomNumbers(CompareSTAPUSSINVI.java:522)
+	at demos.CompareSTAPUSSINVI.runGridStates(CompareSTAPUSSINVI.java:1052)
+	at demos.CompareSTAPUSSINVI.run(CompareSTAPUSSINVI.java:577)
+	at demos.CompareSTAPUSSINVI.main(CompareSTAPUSSINVI.java:1163)
+
+r10_g10_a1_grid_11_fsp_100_9_
+java.lang.Exception: Can not generate 10 unique numbers from a range of 9
+	at demos.CompareSTAPUSSINVI.generateListOfRandomNumbers(CompareSTAPUSSINVI.java:522)
+	at demos.CompareSTAPUSSINVI.runGridStates(CompareSTAPUSSINVI.java:1052)
+	at demos.CompareSTAPUSSINVI.run(CompareSTAPUSSINVI.java:577)
+	at demos.CompareSTAPUSSINVI.main(CompareSTAPUSSINVI.java:1163)
+

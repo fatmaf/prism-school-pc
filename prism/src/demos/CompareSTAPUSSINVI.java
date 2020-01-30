@@ -290,7 +290,7 @@ public class CompareSTAPUSSINVI {
 		this.stapuNoReallocs = false;
 		this.ssiNoReallocs = false;
 
-		boolean justSTAPU = true;
+		boolean justSTAPU = false;
 		boolean justSSI = false;
 
 		String dir = testDirBaseLoc;// "/home/fatma/Data/PhD/code/prism_ws/prism-svn/prism/tests/wkspace/";
@@ -313,7 +313,7 @@ public class CompareSTAPUSSINVI {
 		String resString = "";
 		int r = 4;// numRobots;
 		int g = 9;// 3;//numGoals;
-		boolean doRandomRG = true;
+		boolean doRandomRG = false;
 		if (!results.containsKey(fn))
 			results.put(fn, new HashMap<int[], ArrayList<float[][]>>());
 		ArrayList<Integer> robotNumbers;// = new ArrayList<Integer>();// generateListOfRandomNumbers(r, numRobots);

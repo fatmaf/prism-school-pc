@@ -295,8 +295,8 @@ public class CompareSTAPUSSINVI {
 
 		String dir = testDirBaseLoc;// "/home/fatma/Data/PhD/code/prism_ws/prism-svn/prism/tests/wkspace/";
 
-//		dir = dir + "gridIncWithRepeats/";// "gridIncTests/";
-		dir = dir + "warehouse/";
+		dir = dir + "gridIncWithRepeats/";// "gridIncTests/";
+//		dir = dir + "warehouse/";
 		// g20x4_r10_g10_fs10_fsgen0
 		int numRobots = 10;
 		int numFS = 31;
@@ -307,7 +307,7 @@ public class CompareSTAPUSSINVI {
 		// r:4 [9, 1, 8, 6] g:7 [4, 0, 8, 2, 1, 7]
 		fn = "r10_g10_a1_grid_11_fsp_50_2_"; // actually 100
 //		r:4 [6, 4, 1, 0]	g:9 [0, 5, 1, 7, 3, 2, 4, 6]
-		fn = "shelfDepot_r10_g10_fs62_fsp_50.0_2_";
+	//	fn = "shelfDepot_r10_g10_fs62_fsp_50.0_2_";
 		boolean hasGridData = true;
 		int gridV = 5;
 		String resString = "";

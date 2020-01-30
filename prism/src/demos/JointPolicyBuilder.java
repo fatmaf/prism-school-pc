@@ -586,6 +586,8 @@ public class JointPolicyBuilder
 										break;
 								}
 								if (!allDeadends) {
+									if(inStatesExplored(currentJointState))
+										continue;
 									double probVar = currentJointStateProbPair.getValue();
 									StateExtended failState = new StateExtended(stateIndex, probVar);
 									this.failedStatesQueue.add(failState);

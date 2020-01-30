@@ -263,7 +263,7 @@ public class STAPU
 		long runTime = stopTime - startTime;
 		stapuTimeDuration += runTime;
 
-		fileLog.println("InitializatioModelCheckerMultipleResult resultn: " + getTimeString(runTime));
+		fileLog.println("Initialization: " + getTimeString(runTime));
 		fileLog.println("Time so far: " + getTimeString(stapuTimeDuration));
 
 		long maxTimeNP = 0;
@@ -455,6 +455,7 @@ public class STAPU
 					solution = computeNestedValIterFailurePrint(seqTeamMDP.teamMDPWithSwitches, seqTeamMDP.acceptingStates, statesToAvoid, rewards, minRewards,
 							probPreference, fileLog);// ,probInitVals);
 					fileLog.println("XXX,C,"+System.currentTimeMillis());
+					stopTimer = System.currentTimeMillis();
 					runTimer = stopTimer - startTimer;
 					fileLog.println("Solution : " + getTimeString(runTimer));
 					runningTimer += runTimer;

@@ -449,7 +449,15 @@ public class CompareSTAPUSSINVI {
 
 		int[] fsShelfDepot;
 		String[] fsPercentageStrings;
-		if (grfs.contains("fs")) {
+		if(grfs.contains("seq"))
+		{
+			//theformat for seq is 
+			//seq,r,10,g,10,fs,10
+			fsShelfDepot = new int[] { 0, 13, 25, 37, 50, 62, 74, 87, 99, 111, 123 };
+			fsPercentageStrings = new String[] { "0.0", "11.0", "20.0", "30.0", "41.0", "50.0", "60.0", "71.0", "80.0",
+					"90.0", "100" };
+		}
+		else if (grfs.contains("fs")) {
 			fsShelfDepot = new int[] { 0, 13, 25, 37, 50, 62, 74, 87, 99, 111, 123 };
 			fsPercentageStrings = new String[] { "0.0", "11.0", "20.0", "30.0", "41.0", "50.0", "60.0", "71.0", "80.0",
 					"90.0", "100" };
@@ -460,7 +468,8 @@ public class CompareSTAPUSSINVI {
 		} else if (grfs.contains("g")) {
 			fsShelfDepot = new int[] { 0, 62, 123 };
 			fsPercentageStrings = new String[] { "0.0", "50.0", "100" };
-		} else {
+		}
+		else {
 			fsShelfDepot = new int[] { 0, 13, 25, 37, 50, 62, 74, 87, 99, 100, 111, 123 };
 			fsPercentageStrings = new String[] { "0.0", "11.0", "20.0", "30.0", "41.0", "50.0", "60.0", "71.0", "80.0",
 					"81.0", "90.0", "100" };
@@ -500,7 +509,58 @@ public class CompareSTAPUSSINVI {
 		String errorString = "";
 		int[] rarr = null;
 		int[] garr = null;
-		if (grfs.contains("fs")) {
+		if(grfs.contains("seq")) {
+			//theformat for seq is 
+			//seq,r,10,g,10,fs,10
+			String[]stuff = grfs.split(","); 
+			//r at loc 1 
+			//rval at loc 2 
+			//g at loc 3 
+			//gval at loc 4
+			//fs at loc 5 s
+			//fsval at loc 6 
+			//just checking 
+			String rval="4"; 
+			String gval="5"; 
+			String fsval ="50"; 
+			String fspString = "50.0"; 
+			int fsvalint = Integer.parseInt(fsval); 
+			if(stuff[0].contentEquals("seq"))
+			{
+				if(stuff[1].contentEquals("r"))
+				{
+//					int gridInt = Integer.parseInt(gridValString);
+					rval = stuff[2]; 
+					if(stuff[3].contentEquals("g"))
+					{
+					 gval = stuff[4];
+					 if(stuff[5].contentEquals("fs"))
+					 {
+						 fspString = stuff[6]; 
+					 }
+					}
+				}
+			}
+			int rvalint = Integer.parseInt(rval); 
+			int gvalint = Integer.parseInt(gval); 
+			
+			
+			for(int i = 0; i<fsShelfDepot.length; i++)
+			{
+			 if (fspStrings[i].contentEquals(fspString))
+			 {
+				 fsvalint = fsShelfDepot[i];
+				 break; 
+			 }
+			}
+			
+			rarr = new int[] {rvalint}; 
+			garr = new int[] {gvalint}; 
+			fsShelfDepot = new int[] {fsvalint}; 
+			fspStrings = new String[] {fspString}; 
+			fnSuffix = "seq_r"+rval+"g"+gval+"fsp"+fspString;
+			
+		}else if (grfs.contains("fs")) {
 			rarr = new int[] { 4 };
 			garr = new int[] { 5 };
 			fnSuffix = "allfs";

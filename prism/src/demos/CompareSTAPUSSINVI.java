@@ -40,8 +40,8 @@ public class CompareSTAPUSSINVI {
 	boolean stapuNoReallocs = false;
 	boolean ssiNoReallocs = false;
 
-	String resSavePlace = "/data/private/fxf603/code/prism-svn/prism/tests/resultsSummary/";// "/home/fatma/Data/PhD/code/stapussi_prelim/xkcdStyle/data/";
-	String testDirBaseLoc = "/data/private/fxf603/code/prism-svn/prism/tests/";// "/home/fatma/Data/PhD/code/prism_ws/prism-svn/prism/tests/wkspace/";
+	String resSavePlace =  "/home/fatma/Data/PhD/code/stapussi_prelim/xkcdStyle/data/";
+	String testDirBaseLoc =  "/home/fatma/Data/PhD/code/prism_ws/prism-svn/prism/tests/wkspace/";
 
 	ArrayList<String> errors = new ArrayList<String>();
 	HashMap<String, HashMap<int[], ArrayList<float[][]>>> results = new HashMap<String, HashMap<int[], ArrayList<float[][]>>>();
@@ -290,7 +290,7 @@ public class CompareSTAPUSSINVI {
 		this.stapuNoReallocs = false;
 		this.ssiNoReallocs = false;
 
-		boolean justSTAPU = false;
+		boolean justSTAPU = true;
 		boolean justSSI = false;
 
 		String dir = testDirBaseLoc;// "/home/fatma/Data/PhD/code/prism_ws/prism-svn/prism/tests/wkspace/";
@@ -302,18 +302,20 @@ public class CompareSTAPUSSINVI {
 		int numFS = 31;
 		int numGoals = 11;
 		int numDoors = 0;
-		String fn = "r10_g10_a1_grid_5_fsp_40_8_";// "r10_g10_a1_grid_5_fsp_30_2_";
+//		r10_g10_a1_grid_11_fsp_100_2_
+//		r:4 [6, 4, 1, 0]	g:9 [0, 5, 1, 7, 3, 2, 4, 6]
+		String fn = "r10_g10_a1_grid_11_fsp_100_2_";//"r10_g10_a1_grid_5_fsp_40_8_";// "r10_g10_a1_grid_5_fsp_30_2_";
 		// r10_g10_a1_grid_5_fsp_40_8_
 		// r:4 [9, 1, 8, 6] g:7 [4, 0, 8, 2, 1, 7]
-		fn = "r10_g10_a1_grid_11_fsp_50_2_"; // actually 100
+//		fn = "r10_g10_a1_grid_11_fsp_50_2_"; // actually 100
 //		r:4 [6, 4, 1, 0]	g:9 [0, 5, 1, 7, 3, 2, 4, 6]
 	//	fn = "shelfDepot_r10_g10_fs62_fsp_50.0_2_";
 		boolean hasGridData = true;
 		int gridV = 5;
 		String resString = "";
-		int r = 4;// numRobots;
-		int g = 9;// 3;//numGoals;
-		boolean doRandomRG = false;
+		int r = 4; //numRobots;
+		int g = 7;//9;// 3;//numGoals;
+		boolean doRandomRG =true;
 		if (!results.containsKey(fn))
 			results.put(fn, new HashMap<int[], ArrayList<float[][]>>());
 		ArrayList<Integer> robotNumbers;// = new ArrayList<Integer>();// generateListOfRandomNumbers(r, numRobots);
@@ -351,7 +353,7 @@ public class CompareSTAPUSSINVI {
 		float[][] resArr = new float[2][6];
 		resString += "\nR:" + r + "\tG:" + g;
 
-		resString += doCompare(dir, fn, r, numFS, g, numDoors, resArr, robotNumbers, goalNumbers, doDebug, justSTAPU,
+		resString += doCompare(dir, fn, r, numFS, g, numDoors, resArr, robotNumbers, goalNumbers, true, justSTAPU,
 				justSSI);
 		results.get(fn).get(rgdf).add(resArr);
 

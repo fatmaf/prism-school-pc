@@ -916,8 +916,8 @@ fileLog.println("Bid MDP size:\n"+npSol.getKey().finalProduct.getProductModel().
 				while (!reallocStatesPQ.isEmpty()) {
 					startTime = System.currentTimeMillis();
 
-					numPlanning++;
-					fileLog.println("Reallocation " + numPlanning);
+					
+//					fileLog.println("Reallocation Preprocess" );
 					StateExtended currentSE = reallocStatesPQ.remove();
 					State ps = currentSE.getChildStateState();
 					double stateProb = currentSE.parentToChildTransitionProbability;
@@ -956,6 +956,8 @@ fileLog.println("Bid MDP size:\n"+npSol.getKey().finalProduct.getProductModel().
 					fileLog.println("Time so far: " + getTimeString(totalTimeDuration));
 
 					if (currentTaskSet.size() > 0) {
+						numPlanning++;
+						fileLog.println("Reallocation " + numPlanning);
 						startTime = System.currentTimeMillis();
 						for (int i = 0; i < mdps.size(); i++) {
 
@@ -1069,6 +1071,7 @@ fileLog.println("Bid MDP size:\n"+npSol.getKey().finalProduct.getProductModel().
 					mdpCreator.getRewardsInArray(), 0, true, prism, mainLog);
 			fileLog.println("JP MC:\n"+mdpCreator.mdp.infoStringTable());
 			mainLog.println("Reallocated " + numPlanning + " times");
+			fileLog.println("Reallocated " + numPlanning + " times");
 //			mdpCreator.saveMDP(saveplace + "results/" + fnPrefix, filename + "_jp");
 			if (debugSSI) {
 				for (int i = 0; i < planningValuesSSI.size(); i++) {

@@ -304,18 +304,18 @@ public class CompareSTAPUSSINVI {
 		int numDoors = 0;
 //		r10_g10_a1_grid_11_fsp_100_2_
 //		r:4 [6, 4, 1, 0]	g:9 [0, 5, 1, 7, 3, 2, 4, 6]
-		String fn = "r10_g10_a1_grid_11_fsp_100_2_";//"r10_g10_a1_grid_5_fsp_40_8_";// "r10_g10_a1_grid_5_fsp_30_2_";
+		String fn = "r10_g10_a1_grid_11_fsp_100_2_";// "r10_g10_a1_grid_5_fsp_40_8_";// "r10_g10_a1_grid_5_fsp_30_2_";
 		// r10_g10_a1_grid_5_fsp_40_8_
 		// r:4 [9, 1, 8, 6] g:7 [4, 0, 8, 2, 1, 7]
 //		fn = "r10_g10_a1_grid_11_fsp_50_2_"; // actually 100
 //		r:4 [6, 4, 1, 0]	g:9 [0, 5, 1, 7, 3, 2, 4, 6]
-	//	fn = "shelfDepot_r10_g10_fs62_fsp_50.0_2_";
+		// fn = "shelfDepot_r10_g10_fs62_fsp_50.0_2_";
 		boolean hasGridData = true;
 		int gridV = 5;
 		String resString = "";
-		int r = 4; //numRobots;
-		int g = 7;//9;// 3;//numGoals;
-		boolean doRandomRG =true;
+		int r = 4; // numRobots;
+		int g = 7;// 9;// 3;//numGoals;
+		boolean doRandomRG = true;
 		if (!results.containsKey(fn))
 			results.put(fn, new HashMap<int[], ArrayList<float[][]>>());
 		ArrayList<Integer> robotNumbers;// = new ArrayList<Integer>();// generateListOfRandomNumbers(r, numRobots);
@@ -380,7 +380,7 @@ public class CompareSTAPUSSINVI {
 
 	public void run(String[] args) {
 		String[] options = new String[] { "robot", "door", "fsgoal", "fs", "single", "warehouse1", "warehouse2", "rvar",
-				"wvar", "strangehouse", "grid" };
+				"wvar", "strangehouse", "grid", "warehousefree" };
 
 		this.doSeqSTAPUPolicy = true;// false;
 		this.reallocSSIOnFirstDeadend = true;
@@ -438,6 +438,12 @@ public class CompareSTAPUSSINVI {
 					gridVal = args[1];
 				}
 				runGridStates(gridVal);
+			} else if (option.contains(options[11])) {
+				String grfs = "all";
+				if (args.length > 1) {
+					grfs = args[1];
+				}
+				runWarehouse(2, "", grfs);
 			} else
 				System.out.println("invalid option, options are: " + Arrays.toString(options));
 		} catch (Exception e) {
@@ -451,30 +457,41 @@ public class CompareSTAPUSSINVI {
 
 		int[] fsShelfDepot;
 		String[] fsPercentageStrings;
-		if(grfs.contains("seq"))
-		{
-			//theformat for seq is 
-			//seq,r,10,g,10,fs,10
+		if (grfs.contains("seq")) {
+			// theformat for seq is
+			// seq,r,10,g,10,fs,10
 			fsShelfDepot = new int[] { 0, 13, 25, 37, 50, 62, 74, 87, 99, 111, 123 };
-			fsPercentageStrings = new String[] { "0.0", "11.0", "20.0", "30.0", "41.0", "50.0", "60.0", "71.0", "80.0",
-					"90.0", "100" };
-		}
-		else if (grfs.contains("fs")) {
+			if (tnum != 2)
+				fsPercentageStrings = new String[] { "0.0", "11.0", "20.0", "30.0", "41.0", "50.0", "60.0", "71.0",
+						"80.0", "90.0", "100" };
+			else
+				fsPercentageStrings = new String[] { "0", "10", "20", "30", "40", "50", "60", "70", "80", "90", "100" };
+		} else if (grfs.contains("fs")) {
 			fsShelfDepot = new int[] { 0, 13, 25, 37, 50, 62, 74, 87, 99, 111, 123 };
-			fsPercentageStrings = new String[] { "0.0", "11.0", "20.0", "30.0", "41.0", "50.0", "60.0", "71.0", "80.0",
-					"90.0", "100" };
-
+			if (tnum != 2)
+				fsPercentageStrings = new String[] { "0.0", "11.0", "20.0", "30.0", "41.0", "50.0", "60.0", "71.0",
+						"80.0", "90.0", "100" };
+			else
+				fsPercentageStrings = new String[] { "0", "10", "20", "30", "40", "50", "60", "70", "80", "90", "100" };
 		} else if (grfs.contains("r")) {
 			fsShelfDepot = new int[] { 0, 62, 123 };
-			fsPercentageStrings = new String[] { "0.0", "50.0", "100" };
+			if (tnum != 2)
+				fsPercentageStrings = new String[] { "0.0", "50.0", "100" };
+			else
+				fsPercentageStrings = new String[] { "0", "50", "100" };
 		} else if (grfs.contains("g")) {
 			fsShelfDepot = new int[] { 0, 62, 123 };
-			fsPercentageStrings = new String[] { "0.0", "50.0", "100" };
-		}
-		else {
+			if (tnum != 2)
+				fsPercentageStrings = new String[] { "0.0", "50.0", "100" };
+			else
+				fsPercentageStrings = new String[] { "0", "50", "100" };
+		} else {
 			fsShelfDepot = new int[] { 0, 13, 25, 37, 50, 62, 74, 87, 99, 100, 111, 123 };
-			fsPercentageStrings = new String[] { "0.0", "11.0", "20.0", "30.0", "41.0", "50.0", "60.0", "71.0", "80.0",
-					"81.0", "90.0", "100" };
+			if (tnum != 2)
+				fsPercentageStrings = new String[] { "0.0", "11.0", "20.0", "30.0", "41.0", "50.0", "60.0", "71.0",
+						"80.0", "81.0", "90.0", "100" };
+			else
+				fsPercentageStrings = new String[] { "0", "10", "20", "30", "40", "50", "60", "70", "80", "90", "100" };
 		}
 		String fsBit = "fs";
 
@@ -482,6 +499,9 @@ public class CompareSTAPUSSINVI {
 			runWarehouse(fnPrefix, fsShelfDepot, fsPercentageStrings, fsBit, fnSuffix, grfs);
 		fnPrefix = "depotShelf_r10_g10_";
 		if (tnum == 1)
+			runWarehouse(fnPrefix, fsShelfDepot, fsPercentageStrings, fsBit, fnSuffix, grfs);
+		fnPrefix = "whfree_r10_g10_a1_";
+		if(tnum==2)
 			runWarehouse(fnPrefix, fsShelfDepot, fsPercentageStrings, fsBit, fnSuffix, grfs);
 	}
 
@@ -511,58 +531,51 @@ public class CompareSTAPUSSINVI {
 		String errorString = "";
 		int[] rarr = null;
 		int[] garr = null;
-		if(grfs.contains("seq")) {
-			//theformat for seq is 
-			//seq,r,10,g,10,fs,10
-			String[]stuff = grfs.split(","); 
-			//r at loc 1 
-			//rval at loc 2 
-			//g at loc 3 
-			//gval at loc 4
-			//fs at loc 5 s
-			//fsval at loc 6 
-			//just checking 
-			String rval="4"; 
-			String gval="5"; 
-			String fsval ="50"; 
-			String fspString = "50.0"; 
-			int fsvalint = Integer.parseInt(fsval); 
-			if(stuff[0].contentEquals("seq"))
-			{
-				if(stuff[1].contentEquals("r"))
-				{
+		if (grfs.contains("seq")) {
+			// theformat for seq is
+			// seq,r,10,g,10,fs,10
+			String[] stuff = grfs.split(",");
+			// r at loc 1
+			// rval at loc 2
+			// g at loc 3
+			// gval at loc 4
+			// fs at loc 5 s
+			// fsval at loc 6
+			// just checking
+			String rval = "4";
+			String gval = "5";
+			String fsval = "50";
+			String fspString = "50.0";
+			int fsvalint = Integer.parseInt(fsval);
+			if (stuff[0].contentEquals("seq")) {
+				if (stuff[1].contentEquals("r")) {
 //					int gridInt = Integer.parseInt(gridValString);
-					rval = stuff[2]; 
-					if(stuff[3].contentEquals("g"))
-					{
-					 gval = stuff[4];
-					 if(stuff[5].contentEquals("fs"))
-					 {
-						 fspString = stuff[6]; 
-					 }
+					rval = stuff[2];
+					if (stuff[3].contentEquals("g")) {
+						gval = stuff[4];
+						if (stuff[5].contentEquals("fs")) {
+							fspString = stuff[6];
+						}
 					}
 				}
 			}
-			int rvalint = Integer.parseInt(rval); 
-			int gvalint = Integer.parseInt(gval); 
-			
-			
-			for(int i = 0; i<fsShelfDepot.length; i++)
-			{
-			 if (fspStrings[i].contentEquals(fspString))
-			 {
-				 fsvalint = fsShelfDepot[i];
-				 break; 
-			 }
+			int rvalint = Integer.parseInt(rval);
+			int gvalint = Integer.parseInt(gval);
+
+			for (int i = 0; i < fsShelfDepot.length; i++) {
+				if (fspStrings[i].contentEquals(fspString)) {
+					fsvalint = fsShelfDepot[i];
+					break;
+				}
 			}
-			
-			rarr = new int[] {rvalint}; 
-			garr = new int[] {gvalint}; 
-			fsShelfDepot = new int[] {fsvalint}; 
-			fspStrings = new String[] {fspString}; 
-			fnSuffix = "seq_r"+rval+"g"+gval+"fsp"+fspString;
-			
-		}else if (grfs.contains("fs")) {
+
+			rarr = new int[] { rvalint };
+			garr = new int[] { gvalint };
+			fsShelfDepot = new int[] { fsvalint };
+			fspStrings = new String[] { fspString };
+			fnSuffix = "seq_r" + rval + "g" + gval + "fsp" + fspString;
+
+		} else if (grfs.contains("fs")) {
 			rarr = new int[] { 4 };
 			garr = new int[] { 5 };
 			fnSuffix = "allfs";

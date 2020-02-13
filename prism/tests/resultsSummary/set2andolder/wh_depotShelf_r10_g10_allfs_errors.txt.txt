@@ -1,0 +1,20 @@
+depotShelf_r10_g10_fs123_fsp_100_0_
+r:4 [6, 3, 0, 1] g:5 [6, 5, 2, 4]
+depotShelf_r10_g10_fs123_fsp_100_1_
+r:4 [4, 5, 9, 8] g:5 [9, 2, 6, 8]
+depotShelf_r10_g10_fs123_fsp_100_2_
+r:4 [7, 5, 6, 3] g:5 [5, 4, 7, 3]
+depotShelf_r10_g10_fs123_fsp_100_3_
+r:4 [4, 2, 0, 5] g:5 [6, 9, 8, 1]
+depotShelf_r10_g10_fs123_fsp_100_4_
+r:4 [0, 7, 3, 4] g:5 [8, 4, 0, 7]
+depotShelf_r10_g10_fs123_fsp_100_5_
+r:4 [0, 5, 4, 8] g:5 [9, 7, 8, 2]
+depotShelf_r10_g10_fs123_fsp_100_6_
+r:4 [9, 5, 2, 8] g:5 [2, 3, 7, 1]
+depotShelf_r10_g10_fs123_fsp_100_7_
+r:4 [1, 4, 6, 0] g:5 [5, 0, 2, 1]
+depotShelf_r10_g10_fs123_fsp_100_8_
+r:4 [1, 2, 7, 6] g:5 [4, 9, 8, 0]
+depotShelf_r10_g10_fs123_fsp_100_9_
+r:4 [4, 2, 3, 6] g:5 [5, 4, 6, 3]

@@ -43,6 +43,8 @@ public class CompareSTAPUSSINVI {
 	String resSavePlace = "/data/private/fxf603/code/prism-svn/prism/tests/resultsSummary/";// "/home/fatma/Data/PhD/code/stapussi_prelim/xkcdStyle/data/";
 	String testDirBaseLoc = "/data/private/fxf603/code/prism-svn/prism/tests/";// "/home/fatma/Data/PhD/code/prism_ws/prism-svn/prism/tests/wkspace/";
 
+	String logsBaseLoc = "results/logs/";
+	String logsModLoc = logsBaseLoc;
 	ArrayList<String> errors = new ArrayList<String>();
 	HashMap<String, HashMap<int[], ArrayList<float[][]>>> results = new HashMap<String, HashMap<int[], ArrayList<float[][]>>>();
 
@@ -148,8 +150,8 @@ public class CompareSTAPUSSINVI {
 			float[][] resArr) {
 		boolean reallocOnFirstRobotDeadend = this.reallocSTAPUOnFirstDeadend;
 		PrismLog stapuLog = new PrismFileLog(
-				dir + "results/logs/" + fn + "_r" + numRobots + "_g" + numGoals + logSuffix + "_stapu.txt");
-		String mainLogFileName = dir + "results/logs/" + fn + "_r" + numRobots + "_g" + numGoals + logSuffix
+				dir + logsModLoc + fn + "_r" + numRobots + "_g" + numGoals + logSuffix + "_stapu.txt");
+		String mainLogFileName = dir + logsModLoc + fn + "_r" + numRobots + "_g" + numGoals + logSuffix
 				+ "_stapu_mainLog.txt";
 		if (nullML)
 			mainLogFileName = null;
@@ -181,8 +183,8 @@ public class CompareSTAPUSSINVI {
 	{
 		boolean reallocOnFirstRobotDeadend = this.reallocSSIOnFirstDeadend;
 		PrismLog ssiLog = new PrismFileLog(
-				dir + "results/logs/" + fn + "_r" + numRobots + "_g" + numGoals + logSuffix + "_ssi.txt");
-		String mainLogFileName = dir + "results/logs/" + fn + "_r" + numRobots + "_g" + numGoals + logSuffix
+				dir + logsModLoc + fn + "_r" + numRobots + "_g" + numGoals + logSuffix + "_ssi.txt");
+		String mainLogFileName = dir + logsModLoc + fn + "_r" + numRobots + "_g" + numGoals + logSuffix
 				+ "_ssi_mainLog.txt";
 		if (nullML)
 			mainLogFileName = null;
@@ -219,7 +221,7 @@ public class CompareSTAPUSSINVI {
 			float[][] resArr, ArrayList<Integer> robotNumbers, ArrayList<Integer> goalNumbers, boolean nullML,
 			boolean justSTAPU, boolean justSSI) {
 
-		Path path = Paths.get(dir + "results/logs/");
+		Path path = Paths.get(dir + logsModLoc);
 		try {
 			Files.createDirectories(path);
 		} catch (IOException e) {
@@ -280,7 +282,8 @@ public class CompareSTAPUSSINVI {
 
 	}
 
-	public void singleTests() throws Exception {
+	public void singleTests(String scenario, String fntodo, String rnums, String gnums) throws Exception {
+
 		doDebug = false;
 		this.reallocSSIOnFirstDeadend = true;
 		this.reallocSTAPUOnFirstDeadend = false;// true;
@@ -290,32 +293,29 @@ public class CompareSTAPUSSINVI {
 		this.stapuNoReallocs = false;
 		this.ssiNoReallocs = false;
 
-		boolean justSTAPU = true;
+		boolean justSTAPU = false;
 		boolean justSSI = false;
 
 		String dir = testDirBaseLoc;// "/home/fatma/Data/PhD/code/prism_ws/prism-svn/prism/tests/wkspace/";
 
-		dir = dir + "gridIncWithRepeats/";// "gridIncTests/";
-//		dir = dir + "warehouse/";
-		// g20x4_r10_g10_fs10_fsgen0
+		dir = dir + scenario;
+
 		int numRobots = 10;
 		int numFS = 31;
 		int numGoals = 11;
 		int numDoors = 0;
-//		r10_g10_a1_grid_11_fsp_100_2_
-//		r:4 [6, 4, 1, 0]	g:9 [0, 5, 1, 7, 3, 2, 4, 6]
-		String fn = "r10_g10_a1_grid_11_fsp_100_2_";// "r10_g10_a1_grid_5_fsp_40_8_";// "r10_g10_a1_grid_5_fsp_30_2_";
-		// r10_g10_a1_grid_5_fsp_40_8_
-		// r:4 [9, 1, 8, 6] g:7 [4, 0, 8, 2, 1, 7]
-//		fn = "r10_g10_a1_grid_11_fsp_50_2_"; // actually 100
-//		r:4 [6, 4, 1, 0]	g:9 [0, 5, 1, 7, 3, 2, 4, 6]
-		// fn = "shelfDepot_r10_g10_fs62_fsp_50.0_2_";
-		boolean hasGridData = true;
+
+		String fn = fntodo;
+		boolean hasGridData = false;
 		int gridV = 5;
 		String resString = "";
-		int r = 4; // numRobots;
-		int g = 7;// 9;// 3;//numGoals;
-		boolean doRandomRG = true;
+
+		String[] rnumss = rnums.split(",");
+		String[] gnumss = gnums.split(",");
+
+		int r = rnumss.length;
+		int g = gnumss.length+1;
+		boolean doRandomRG = false;
 		if (!results.containsKey(fn))
 			results.put(fn, new HashMap<int[], ArrayList<float[][]>>());
 		ArrayList<Integer> robotNumbers;// = new ArrayList<Integer>();// generateListOfRandomNumbers(r, numRobots);
@@ -330,18 +330,104 @@ public class CompareSTAPUSSINVI {
 		} else {
 			robotNumbers = new ArrayList<Integer>();
 			goalNumbers = new ArrayList<Integer>();
-			robotNumbers.add(6);
-			robotNumbers.add(4);
-			robotNumbers.add(1);
-			robotNumbers.add(0);
-			goalNumbers.add(0);
-			goalNumbers.add(5);
-			goalNumbers.add(1);
-			goalNumbers.add(7);
-			goalNumbers.add(3);
-			goalNumbers.add(2);
-			goalNumbers.add(4);
-			goalNumbers.add(6);
+//			int[] rnums = new int[] {9, 5, 2, 7, 8, 1, 0, 3}; 
+//			int[] gnums = new int[] {3, 6, 5, 1}; 
+//			r = rnums.length; 
+//			g = gnums.length; 
+			for (String rnum : rnumss) {
+				int rnumint = Integer.parseInt(rnum);
+				robotNumbers.add(rnumint);
+			}
+			for (String gnum : gnumss) {
+				int gnumint = Integer.parseInt(gnum);
+				goalNumbers.add(gnumint);
+			}
+// 			robotNumbers.add(6);
+//			robotNumbers.add(4);
+//			robotNumbers.add(1);
+//			robotNumbers.add(0);
+//			goalNumbers.add(0);
+//			goalNumbers.add(5);
+//			goalNumbers.add(1);
+//			goalNumbers.add(7);
+//			goalNumbers.add(3);
+//			goalNumbers.add(2);
+//			goalNumbers.add(4);
+//			goalNumbers.add(6);
+		}
+		int[] rgdf;
+		if (hasGridData)
+			rgdf = new int[] { r, g, numDoors, numFS, gridV };
+		else
+			rgdf = new int[] { r, g, numDoors, numFS };
+		if (!results.get(fn).containsKey(rgdf))
+			results.get(fn).put(rgdf, new ArrayList<float[][]>());
+		float[][] resArr = new float[2][6];
+		resString += "\nR:" + r + "\tG:" + g;
+
+		resString += doCompare(dir, fn, r, numFS, g, numDoors, resArr, robotNumbers, goalNumbers, true, justSTAPU,
+				justSSI);
+		results.get(fn).get(rgdf).add(resArr);
+
+		printResults(hasGridData);
+	}
+
+	public void singleTests() throws Exception {
+		doDebug = false;
+		this.reallocSSIOnFirstDeadend = true;
+		this.reallocSTAPUOnFirstDeadend = false;// true;
+
+		this.doSeqSTAPUPolicy = true;// false;
+
+		this.stapuNoReallocs = false;
+		this.ssiNoReallocs = false;
+
+		boolean justSTAPU = true;
+		boolean justSSI = false;
+
+		String dir = testDirBaseLoc;// 
+//		single warehouse/ depotShelf_r10_g10_fs111_fsp_90.0_0_ 3,9,6,4,1,0,8,2 4,9,5,6
+
+//		dir = dir + "gridIncWithRepeats/";// "gridIncTests/";
+		dir = dir + "warehouse/";
+
+		int numRobots = 10;
+		int numFS = 31;
+		int numGoals = 11;
+		int numDoors = 0;
+
+		String fn = "r10_g10_a1_grid_11_fsp_100_2_";
+		fn = "depotShelf_r10_g10_fs111_fsp_90.0_0_";
+
+		boolean hasGridData = true;
+		int gridV = 5;
+		String resString = "";
+		int r = 4; // numRobots;
+		int g = 7;// 9;// 3;//numGoals;
+		boolean doRandomRG = false;
+		if (!results.containsKey(fn))
+			results.put(fn, new HashMap<int[], ArrayList<float[][]>>());
+		ArrayList<Integer> robotNumbers;// = new ArrayList<Integer>();// generateListOfRandomNumbers(r, numRobots);
+		ArrayList<Integer> goalNumbers;// = new ArrayList<Integer>(); // generateListOfRandomNumbers(g - 1, numGoals -
+										// 1);
+										// //-1 cuz the last one is always a safety
+		if (doRandomRG) {
+			robotNumbers = generateListOfRandomNumbers(r, numRobots);
+			goalNumbers = generateListOfRandomNumbers(g - 1, numGoals - 1);
+
+			new ArrayList<Integer>(); //
+		} else {
+			robotNumbers = new ArrayList<Integer>();
+			goalNumbers = new ArrayList<Integer>();
+			int[] rnums = new int[] { 3,9,6,4,1,0,8,2};
+			int[] gnums = new int[] { 4,9,5,6 };
+			r = rnums.length;
+			g = gnums.length+1;
+			for (int rnum : rnums)
+				robotNumbers.add(rnum);
+			for (int gnum : gnums)
+				goalNumbers.add(gnum);
+
 		}
 		int[] rgdf;
 		if (hasGridData)
@@ -380,7 +466,7 @@ public class CompareSTAPUSSINVI {
 
 	public void run(String[] args) {
 		String[] options = new String[] { "robot", "door", "fsgoal", "fs", "single", "warehouse1", "warehouse2", "rvar",
-				"wvar", "strangehouse", "grid", "warehousefree" };
+				"wvar", "strangehouse", "grid", "warehousefree", "gfixed" };
 
 		this.doSeqSTAPUPolicy = true;// false;
 		this.reallocSSIOnFirstDeadend = true;
@@ -405,8 +491,19 @@ public class CompareSTAPUSSINVI {
 //				runFS();
 				System.out.println("Not implemented");
 
-			} else if (option.contains(options[4]))
+			} else if (option.contains(options[4])) {
+				if(args.length > 1)
+				{
+					String scen = args[1]; 
+					String fn = args[2]; 
+					String rnums = args[3]; 
+					String gnums = args[4];
+					singleTests(scen,fn,rnums,gnums);
+				}
+				else {
 				singleTests();
+				}
+			}
 			else if (option.contains(options[5])) {
 				String grfs = "all";
 				if (args.length > 1) {
@@ -444,8 +541,18 @@ public class CompareSTAPUSSINVI {
 					grfs = args[1];
 				}
 				runWarehouse(2, "", grfs);
+			} else if (option.contains(options[12])) {
+				String gridVal = "2";
+				if (args.length > 1) {
+					gridVal = args[1];
+				}
+				runGrid11Fixed(gridVal);
 			} else
-				System.out.println("invalid option, options are: " + Arrays.toString(options));
+			{	System.out.println("invalid option, options are: " + Arrays.toString(options));
+			 	System.out.println("Format for "+options[9]+": "+options[9]+" ,"+options[9]+" r,"+options[9]+" fs,"+options[9]+" g"); 
+			 	System.out.println("Format for "+options[5]+"and "+options[6]+": "+options[6]+" ,"+options[6]+" seq,r,9,g,5,fs,10.0,"+options[6]+" r,"+options[6]+" fs,"+options[6]+" g"); 
+			 	System.out.println("Format for "+options[4]+": "+options[4]+" ,"+options[4]+" scenariodir fn r1,r2,..rn g1,g2,..gn");
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -460,38 +567,69 @@ public class CompareSTAPUSSINVI {
 		if (grfs.contains("seq")) {
 			// theformat for seq is
 			// seq,r,10,g,10,fs,10
-			fsShelfDepot = new int[] { 0, 13, 25, 37, 50, 62, 74, 87, 99, 111, 123 };
-			if (tnum != 2)
+			if (tnum == 0) {
+				fsShelfDepot = new int[] { 0, 13, 25, 37, 50, 62, 74, 87, 99, 111, 123 };
 				fsPercentageStrings = new String[] { "0.0", "11.0", "20.0", "30.0", "41.0", "50.0", "60.0", "71.0",
 						"80.0", "90.0", "100" };
-			else
+			} else if (tnum == 1) {
+				fsShelfDepot = new int[] { 0, 13, 25, 37, 50, 62, 74, 87, 99, 111 };
+				fsPercentageStrings = new String[] { "0.0", "11.0", "20.0", "30.0", "41.0", "50.0", "60.0", "71.0",
+						"80.0", "90.0" };
+			} else {
+				fsShelfDepot = new int[] { 0, 13, 25, 37, 50, 62, 74, 87, 99, 111, 123 };
 				fsPercentageStrings = new String[] { "0", "10", "20", "30", "40", "50", "60", "70", "80", "90", "100" };
+			}
+
 		} else if (grfs.contains("fs")) {
-			fsShelfDepot = new int[] { 0, 13, 25, 37, 50, 62, 74, 87, 99, 111, 123 };
-			if (tnum != 2)
+			if (tnum == 0) {
+				fsShelfDepot = new int[] { 0, 13, 25, 37, 50, 62, 74, 87, 99, 111, 123 };
 				fsPercentageStrings = new String[] { "0.0", "11.0", "20.0", "30.0", "41.0", "50.0", "60.0", "71.0",
 						"80.0", "90.0", "100" };
-			else
-				fsPercentageStrings = new String[] { "0", "10", "20", "30", "40", "50", "60", "70", "80", "90", "100" };
-		} else if (grfs.contains("r")) {
-			fsShelfDepot = new int[] { 0, 62, 123 };
-			if (tnum != 2)
-				fsPercentageStrings = new String[] { "0.0", "50.0", "100" };
-			else
-				fsPercentageStrings = new String[] { "0", "50", "100" };
-		} else if (grfs.contains("g")) {
-			fsShelfDepot = new int[] { 0, 62, 123 };
-			if (tnum != 2)
-				fsPercentageStrings = new String[] { "0.0", "50.0", "100" };
-			else
-				fsPercentageStrings = new String[] { "0", "50", "100" };
-		} else {
-			fsShelfDepot = new int[] { 0, 13, 25, 37, 50, 62, 74, 87, 99, 100, 111, 123 };
-			if (tnum != 2)
+			} else if (tnum == 1) {
+				fsShelfDepot = new int[] { 0, 13, 25, 37, 50, 62, 74, 87, 99, 111 };
 				fsPercentageStrings = new String[] { "0.0", "11.0", "20.0", "30.0", "41.0", "50.0", "60.0", "71.0",
-						"80.0", "81.0", "90.0", "100" };
-			else
+						"80.0", "90.0" };
+			} else {
+				fsShelfDepot = new int[] { 0, 13, 25, 37, 50, 62, 74, 87, 99, 111, 123 };
 				fsPercentageStrings = new String[] { "0", "10", "20", "30", "40", "50", "60", "70", "80", "90", "100" };
+			}
+
+		} else if (grfs.contains("r")) {
+			if (tnum == 0) {
+				fsShelfDepot = new int[] { 0, 62, 111 };
+				fsPercentageStrings = new String[] { "0.0", "50.0", "90.0" };
+			} else if (tnum == 1) {
+				fsShelfDepot = new int[] { 0, 62, 111 };
+				fsPercentageStrings = new String[] { "0.0", "50.0", "90.0" };
+			} else {
+				fsShelfDepot = new int[] { 0, 62, 111 };
+				fsPercentageStrings = new String[] { "0", "50", "90" };
+			}
+
+		} else if (grfs.contains("g")) {
+			if (tnum == 0) {
+				fsShelfDepot = new int[] { 0, 62, 111 };
+				fsPercentageStrings = new String[] { "0.0", "50.0", "90.0" };
+			} else if (tnum == 1) {
+				fsShelfDepot = new int[] { 0, 62, 111 };
+				fsPercentageStrings = new String[] { "0.0", "50.0", "90.0" };
+			} else {
+				fsShelfDepot = new int[] { 0, 62, 111 };
+				fsPercentageStrings = new String[] { "0", "50", "90" };
+			}
+		} else {
+			if (tnum == 0) {
+				fsShelfDepot = new int[] { 0, 13, 25, 37, 50, 62, 74, 87, 99, 111, 123 };
+				fsPercentageStrings = new String[] { "0.0", "11.0", "20.0", "30.0", "41.0", "50.0", "60.0", "71.0",
+						"80.0", "90.0", "100" };
+			} else if (tnum == 1) {
+				fsShelfDepot = new int[] { 0, 13, 25, 37, 50, 62, 74, 87, 99, 111 };
+				fsPercentageStrings = new String[] { "0.0", "11.0", "20.0", "30.0", "41.0", "50.0", "60.0", "71.0",
+						"80.0", "90.0" };
+			} else {
+				fsShelfDepot = new int[] { 0, 13, 25, 37, 50, 62, 74, 87, 99, 111, 123 };
+				fsPercentageStrings = new String[] { "0", "10", "20", "30", "40", "50", "60", "70", "80", "90", "100" };
+			}
 		}
 		String fsBit = "fs";
 
@@ -501,7 +639,7 @@ public class CompareSTAPUSSINVI {
 		if (tnum == 1)
 			runWarehouse(fnPrefix, fsShelfDepot, fsPercentageStrings, fsBit, fnSuffix, grfs);
 		fnPrefix = "whfree_r10_g10_a1_";
-		if(tnum==2)
+		if (tnum == 2)
 			runWarehouse(fnPrefix, fsShelfDepot, fsPercentageStrings, fsBit, fnSuffix, grfs);
 	}
 
@@ -535,6 +673,7 @@ public class CompareSTAPUSSINVI {
 			// theformat for seq is
 			// seq,r,10,g,10,fs,10
 			String[] stuff = grfs.split(",");
+			logsModLoc = logsBaseLoc + "seq/";
 			// r at loc 1
 			// rval at loc 2
 			// g at loc 3
@@ -576,18 +715,23 @@ public class CompareSTAPUSSINVI {
 			fnSuffix = "seq_r" + rval + "g" + gval + "fsp" + fspString;
 
 		} else if (grfs.contains("fs")) {
+			logsModLoc = logsBaseLoc + "fs/";
 			rarr = new int[] { 4 };
 			garr = new int[] { 5 };
 			fnSuffix = "allfs";
 		} else if (grfs.contains("r")) {
+			logsModLoc = logsBaseLoc + "r/";
 			rarr = new int[] { 2, 4, 6, 8 };
 			garr = new int[] { 5 };
 			fnSuffix = "allr";
 		} else if (grfs.contains("g")) {
+			logsModLoc = logsBaseLoc + "g/";
 			rarr = new int[] { 4 };
 			garr = new int[] { 3, 5, 7, 9 };
 			fnSuffix = "allg";
 		} else {
+			logsModLoc = logsBaseLoc + "all/";
+
 			rarr = new int[] { 2, 4, 6, 8, 10 };
 			garr = new int[] { 3, 5, 7, 9, 11 };
 		}
@@ -713,24 +857,28 @@ public class CompareSTAPUSSINVI {
 		int[] allfs = null;
 		int[] allfsp = null;
 		if (grfs.contains("fs")) {
+			logsModLoc = logsBaseLoc + "fs/";
 			rarr = new int[] { 4 };
 			garr = new int[] { 5 };
 			allfs = new int[] { 0, 7, 14, 20, 27, 34, 40, 47, 53, 60, 66 };
 			allfsp = new int[] { 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 };
 			fnSuffix = "allfs";
 		} else if (grfs.contains("r")) {
+			logsModLoc = logsBaseLoc + "r/";
 			rarr = new int[] { 2, 4, 6, 8 };
 			garr = new int[] { 5 };
-			allfs = new int[] { 0, 34, 66 };
-			allfsp = new int[] { 0, 50, 100 };
+			allfs = new int[] { 0, 34, 60 };
+			allfsp = new int[] { 0, 50, 90 };
 			fnSuffix = "allr";
 		} else if (grfs.contains("g")) {
+			logsModLoc = logsBaseLoc + "g/";
 			rarr = new int[] { 4 };
 			garr = new int[] { 3, 5, 7, 9 };
-			allfs = new int[] { 0, 34, 66 };
-			allfsp = new int[] { 0, 50, 100 };
+			allfs = new int[] { 0, 34, 60 };
+			allfsp = new int[] { 0, 50, 90 };
 			fnSuffix = "allg";
 		} else {
+			logsModLoc = logsBaseLoc + "all/";
 			rarr = new int[] { 2, 4, 6, 8, 10 };
 			garr = new int[] { 3, 5, 7, 9, 11 };
 			allfs = new int[] { 0, 7, 14, 20, 27, 34, 40, 47, 53, 60, 66 };
@@ -827,7 +975,8 @@ public class CompareSTAPUSSINVI {
 	private void runGridStates(String gridValString) {
 
 		boolean hasGridData = true;
-		String fnPrefix = "r10_g10_a1_grid_";// "r10_g10_grid_";
+		String fnPrefix = "r10_g10_a1_grid_";// {/"r10_g10_a2_grid_11_li_rg_","r10_g10_a2_grid_11_ri_lg_"};//
+												// "r10_g10_grid_";
 		String dir = testDirBaseLoc + "gridIncWithRepeats/";// "gridIncTests/";
 
 		String extraText = "";
@@ -847,10 +996,11 @@ public class CompareSTAPUSSINVI {
 		int[] fsPercentagesToDo = new int[] { 0, /* 20, */50/* , 80 */, 100 };
 		int[] rarr_grid9 = new int[] { 2, 4 };
 		int[] garr_grid9 = new int[] { 3, 5, 7 };
-		int[] rarr = new int[] { 2, 4, 6, 8, 10 };
+		int[] rarr = new int[] { 2, 4, 6, 8 };
 		int[] garr = new int[] { 3, 5, 7, 9 };
 		int roughNumFiles = 0;
 		if (gridValString.contains("all")) {
+			logsModLoc = logsBaseLoc + "all/";
 			gridIncs = new int[] { 8, 11, 14, 17, 20, 23, 5 };
 			roughNumFiles = 2 * rarr_grid9.length * garr_grid9.length * fsPercentages.length * numFilesPerFS;
 			roughNumFiles += (gridIncs.length - 2) * rarr.length * garr.length * fsPercentagesToDo.length
@@ -859,17 +1009,21 @@ public class CompareSTAPUSSINVI {
 		} else {
 
 			if ((gridValString.contains("r"))) {
+				logsModLoc = logsBaseLoc + "r/";
 				dorobotsonly = true;
 				gridValString = gridValString.replace("r", "");
 			} else {
 				if (gridValString.contains("g")) {
+					logsModLoc = logsBaseLoc + "g/";
 					dogoalsonly = true;
 					gridValString = gridValString.replace("g", "");
+				} else {
+					logsModLoc = logsBaseLoc + "fs/";
 				}
 			}
 			int gridInt = Integer.parseInt(gridValString);
 			gridIncs = new int[] { gridInt };
-
+			logsModLoc = logsModLoc + gridInt + "/";
 		}
 		int fnnumStart = 0;
 		int[] rnums = null;
@@ -898,19 +1052,19 @@ public class CompareSTAPUSSINVI {
 					fsnums = new int[] { 100 };
 				} else if (gridVal == 11) {
 					if (dorobotsonly) {
-						rnums = new int[] { 2, 4, 6, 8, 10 };
-						rnums = new int[] { 10 };
+						rnums = new int[] { 2, 4, 6, 8/* , 10 */ };
+//						rnums = new int[] { 10 };
 						gnums = new int[] { 5 };
-						fsnums = new int[] { 0, 50, 100 };
+						fsnums = new int[] { 0, 50, 90 };
 //						fsnums = new int[] { 100 };
-						fnnumStart = 5;
-						extraText = "rall_g5_fs0_50_100";
+						fnnumStart = 0;
+						extraText = "rall_g5_fs0_50_90";
 //						extraText = "rall_g5_fs0_50_100_r10_fs100_5onwards";
 					} else if (dogoalsonly) {
 						rnums = new int[] { 4 };
-						gnums = new int[] { 3, 5, 7, 9, 11 };
-						fsnums = new int[] { 0, 50, 100 };
-						extraText = "r4_gall_fs0_50_100";
+						gnums = new int[] { 3, 5, 7, 9/* , 11 */ };
+						fsnums = new int[] { 0, 50, 90 };
+						extraText = "r4_gall_fs0_50_90";
 					} else {
 						rnums = new int[] { 4 };
 						gnums = new int[] { 5 };
@@ -1000,6 +1154,171 @@ public class CompareSTAPUSSINVI {
 			for (int i = 0; i < errors.size(); i++) {
 				System.out.println(errors.get(i));
 			}
+		}
+	}
+
+	private void runGrid11Fixed(String gridValString) {
+
+		boolean hasGridData = false;
+		// String fnPrefix = "r10_g10_a2_grid_";// "r10_g10_grid_";
+		String dir = testDirBaseLoc + "grid11fixed/";// "gridIncTests/";
+		String[] fnPrefixes = new String[] { "r10_g10_a2_grid_11_li_rg_", "r10_g10_a2_grid_11_ri_lg_" };
+		String extraText = "";
+		int numRobots = 10;
+		int numGoals = 11;
+		int numDoors = 0;
+		String fn = "";
+//		r10_g10_a2_grid_11_li_rg_  r10_g10_a2_grid_11_li_rg_fs97_fsp_80_9
+		boolean dorobotsonly = false;
+		boolean dogoalsonly = false;
+		int numFilesPerFS = 10;
+
+		int[] fsPercentages = new int[] { 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 };
+
+		int[] fsValues = new int[] { 0, 13, 25, 37, 49, 61, 73, 85, 97, 109, 121 };
+		int[] fsPercentagesToDo = new int[] { 0, /* 20, */50/* , 80 */, 90 };
+		int[] fsValuesToDo = new int[] { 0, 61, 109 };
+
+		int[] rarr = new int[] { 2, 4, 6, 8 };
+		int[] garr = new int[] { 3, 5, 7, 9 };
+		int roughNumFiles = 0;
+
+		boolean dofsonly = false;
+
+		if ((gridValString.contains("r"))) {
+			logsModLoc = logsBaseLoc + "r/";
+			dorobotsonly = true;
+			gridValString = gridValString.replace("r", "");
+		} else if (gridValString.contains("g")) {
+			logsModLoc = logsBaseLoc + "g/";
+			dogoalsonly = true;
+			gridValString = gridValString.replace("g", "");
+
+		} else if (gridValString.contains("fs")) {
+			logsModLoc = logsBaseLoc + "fs/";
+			gridValString = gridValString.replace("fs", "");
+			dofsonly = true;
+		} else {
+			logsModLoc = logsBaseLoc + "all/";
+		}
+		int gridInt = Integer.parseInt(gridValString);
+		if (gridInt == 0) {
+			fnPrefixes = new String[] { "r10_g10_a2_grid_11_li_rg_" };
+		} else if (gridInt == 1) {
+			fnPrefixes = new String[] { "r10_g10_a2_grid_11_ri_lg_" };
+		}
+
+		int fnnumStart = 0;
+		int[] rnums = null;
+		int[] gnums = null;
+		int[] fsnums = null;
+		int[] fsvals = null;
+		int testFileNum = 1;
+
+		String errorString = "";
+		String errorfn = "";
+		String resString;
+
+		if (dorobotsonly) {
+			rnums = new int[] { 2, 4, 6, 8/* , 10 */ };
+//			rnums = new int[] { 10 };
+			gnums = new int[] { 5 };
+			fsnums = new int[] { 0, 50, 90 };
+			fsvals = new int[] { 0, 61, 109 };
+			extraText = "rall_g5_fs0_50_90";
+		} else if (dogoalsonly) {
+			rnums = new int[] { 4 };
+			gnums = new int[] { 3, 5, 7, 9/* , 11 */ };
+			fsnums = new int[] { 0, 50, 90 };
+			fsvals = new int[] { 0, 61, 109 };
+			extraText = "r4_gall_fs0_50_90";
+		} else if (dofsonly) {
+			rnums = new int[] { 4 };
+			gnums = new int[] { 5 };
+			fsnums = fsPercentages;
+			fsvals = fsValues;
+			extraText = "r4_g5_fsall";
+		} // fnPrefix = "grid_r4_g5_fsall_";
+		else {
+			rnums = rarr;
+			gnums = garr;
+			fsnums = fsPercentagesToDo;
+			fsvals = fsValuesToDo;
+		}
+
+		roughNumFiles = rnums.length * gnums.length * fsnums.length * numFilesPerFS;
+		System.out.println("Running " + roughNumFiles + " tests ");
+		for (String fnPrefix : fnPrefixes) {
+			logsModLoc = logsModLoc + fnPrefix + "/";
+			for (int rnum : rnums) {
+				for (int gnum : gnums) {
+
+					for (int fsnumid = 0; fsnumid < fsnums.length; fsnumid++) {
+						int fsnum = fsnums[fsnumid];
+						int fsv = fsvals[fsnumid];
+						for (int filenum = fnnumStart; filenum < numFilesPerFS; filenum++) {
+//						10_g10_a2_grid_11_li_rg_fs97_fsp_80_9
+							fn = fnPrefix + "fs" + fsv + "_fsp_" + fsnum + "_" + filenum + "_";
+							resString = "";
+							errorString = fn;
+							errorfn = fn;
+							if (!results.containsKey(fn))
+								results.put(fn, new HashMap<int[], ArrayList<float[][]>>());
+							try {
+								ArrayList<Integer> robotNumbers = generateListOfRandomNumbers(rnum, numRobots);
+
+								ArrayList<Integer> goalNumbers = generateListOfRandomNumbers(gnum - 1, numGoals - 1);
+
+								int[] rgdf = new int[] { rnum, gnum, numDoors, fsnum };
+								if (!results.get(fn).containsKey(rgdf))
+									results.get(fn).put(rgdf, new ArrayList<float[][]>());
+								float[][] resArr = new float[2][6];
+								resString += "\nR:" + rnum + "\tG:" + gnum;
+
+								fileText(fn + "\nR:" + rnum + "\tG:" + gnum, roughNumFiles, testFileNum);
+
+								errorString += "\nr:" + rnum + " " + robotNumbers.toString() + "\tg:" + gnum + " "
+										+ goalNumbers.toString();
+								resString += doCompare(dir, fn, rnum, fsnum, gnum, numDoors, resArr, robotNumbers,
+										goalNumbers, doDebug);
+
+								results.get(fn).get(rgdf).add(resArr);
+								String resname = fnPrefix + extraText + "_r" + rnum + "g" + gnum;
+
+								this.printResults(resSavePlace + resname, hasGridData);
+								testFileNum++;
+							} catch (Exception e) {
+								errorString += "\n" + getStackTraceString(e);
+								errors.add(errorString);
+
+								if (results.containsKey(errorfn))
+									// remove this from the results
+									results.remove(errorfn);
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+						if (errors.size() > 0)
+
+						{
+							writeErrors(resSavePlace + fn + Arrays.toString(rnums) + Arrays.toString(gnums)
+									+ Arrays.toString(fsnums) + extraText + "_errors.txt");
+							System.out.println("Errors");
+							for (int i = 0; i < errors.size(); i++) {
+								System.out.println(errors.get(i));
+							}
+						}
+						fileText("Completed Set: " + rnum + "," + gnum + "," + fsnum + "," + "(r,g,fsnum)",
+								roughNumFiles, testFileNum);
+
+					}
+					fileText("Completed Set: " + rnum + "," + gnum + "," + "(r,g)", roughNumFiles, testFileNum);
+
+				}
+				fileText("Completed Set: " + rnum + "," + "(r)", roughNumFiles, testFileNum);
+
+			}
+
 		}
 	}
 

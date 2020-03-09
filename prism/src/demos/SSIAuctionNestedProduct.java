@@ -786,9 +786,15 @@ fileLog.println("Bid MDP size:\n"+npSol.getKey().finalProduct.getProductModel().
 			//			boolean stopReallocationWhenAnyRobotDeadends = true;//false;
 			// Create a log for PRISM output (hidden or stdout)
 			//PrismLog mainLog = new PrismDevNullLog();
+			
 			PrismLog mainLog = new PrismFileLog("stdout");
 			if (mainLogFile != null) {
 				mainLog = new PrismFileLog(mainLogFile);
+			}
+			else
+			{
+				if(!this.debugSSI)
+					mainLog = new PrismDevNullLog();
 			}
 
 			// Initialise PRISM engine 
@@ -1080,6 +1086,7 @@ fileLog.println("Bid MDP size:\n"+npSol.getKey().finalProduct.getProductModel().
 			}
 			results = resultValues(nviSol, mdpCreator.mdp, fileLog);
 			fileLog.println("XXX,E,"+System.currentTimeMillis());
+			mainLog.close();
 			//			return resultvalues;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -1097,6 +1104,7 @@ fileLog.println("Bid MDP size:\n"+npSol.getKey().finalProduct.getProductModel().
 		fileLog.println("Final Clean up: " + getTimeString(runTime));
 		fileLog.println("Time so far: " + getTimeString(totalTimeDuration));
 		fileLog.println("XXX,F,"+System.currentTimeMillis());
+		
 		return results;
 	}
 
@@ -1216,7 +1224,7 @@ fileLog.println("Bid MDP size:\n"+npSol.getKey().finalProduct.getProductModel().
 	int updateMDPStateUsingSS(HashMap<Integer, HashMap<Integer, Integer>> jvlTosvl, MDPSimple mdp, int state, ArrayList<String> ssNames, State js, VarList jvl)
 	{
 
-		State stateState = mdp.getStatesList().get(state);
+		State stateState = new State(mdp.getStatesList().get(state));
 		VarList svl = mdp.getVarList();
 		for (String ss : ssNames) {
 			int svlIndex = svl.getIndex(ss);

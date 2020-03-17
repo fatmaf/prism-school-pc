@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
+
 import cern.colt.Arrays;
 import prism.PrismFileLog;
 import prism.PrismLog;
@@ -49,6 +51,10 @@ public class CompareSTAPUSSINVI {
 	ArrayList<String> errors = new ArrayList<String>();
 	HashMap<String, HashMap<int[], ArrayList<float[][]>>> results = new HashMap<String, HashMap<int[], ArrayList<float[][]>>>();
 
+	long alphastarttime = 0; 
+	
+	long alphadur = 0; 
+	
 	public void printResults(String contest, boolean hasGridData) {
 		PrintStream outLog = System.out;
 		File file = null;
@@ -283,7 +289,8 @@ public class CompareSTAPUSSINVI {
 
 	}
 
-	public void singleTests(String scenario, String fntodo, String rnums, String gnums) throws Exception {
+	public void singleTests(String scenario, String fntodo, String rnums, String gnums, String fsval, String dval,
+			String isgrid, boolean writeToFile) throws Exception {
 
 		doDebug = false;
 		this.reallocSSIOnFirstDeadend = true;
@@ -297,32 +304,49 @@ public class CompareSTAPUSSINVI {
 		boolean justSTAPU = false;
 		boolean justSSI = false;
 
-		String dir = testDirBaseLoc;// "/home/fatma/Data/PhD/code/prism_ws/prism-svn/prism/tests/wkspace/";
+		String dir = testDirBaseLoc;//
 
 		dir = dir + scenario;
-
+		logsModLoc = logsBaseLoc + "st/";
 		int numRobots = 10;
 		int numFS = 31;
 		int numGoals = 11;
 		int numDoors = 0;
 
+		numDoors = Integer.parseInt(dval);
+		numFS = Integer.parseInt(fsval);
+
 		String fn = fntodo;
 		boolean hasGridData = false;
+		hasGridData = Boolean.parseBoolean(isgrid);
 		int gridV = 5;
 		String resString = "";
 
+		String errorString = "";
 		String[] rnumss = rnums.split(",");
 		String[] gnumss = gnums.split(",");
 
-		int r = rnumss.length;
-		int g = gnumss.length + 1;
+		int r;
+		if (rnumss.length == 1)
+			r = Integer.parseInt(rnumss[0]);
+		else
+			r = rnumss.length;
+		int g;
+		if (gnumss.length == 1)
+			g = Integer.parseInt(gnumss[0]);
+		else
+			g = gnumss.length + 1;
 		boolean doRandomRG = false;
+		if(rnumss.length==1 && gnumss.length==1)
+			doRandomRG=true; 
+		else if (rnumss.length==1 || gnumss.length==1)
+		{
+			System.out.println("rnums or gnums do not match");
+		}
 		if (!results.containsKey(fn))
 			results.put(fn, new HashMap<int[], ArrayList<float[][]>>());
-		ArrayList<Integer> robotNumbers;// = new ArrayList<Integer>();// generateListOfRandomNumbers(r, numRobots);
-		ArrayList<Integer> goalNumbers;// = new ArrayList<Integer>(); // generateListOfRandomNumbers(g - 1, numGoals -
-										// 1);
-										// //-1 cuz the last one is always a safety
+		ArrayList<Integer> robotNumbers;
+		ArrayList<Integer> goalNumbers;
 		if (doRandomRG) {
 			robotNumbers = generateListOfRandomNumbers(r, numRobots);
 			goalNumbers = generateListOfRandomNumbers(g - 1, numGoals - 1);
@@ -331,10 +355,7 @@ public class CompareSTAPUSSINVI {
 		} else {
 			robotNumbers = new ArrayList<Integer>();
 			goalNumbers = new ArrayList<Integer>();
-//			int[] rnums = new int[] {9, 5, 2, 7, 8, 1, 0, 3}; 
-//			int[] gnums = new int[] {3, 6, 5, 1}; 
-//			r = rnums.length; 
-//			g = gnums.length; 
+
 			for (String rnum : rnumss) {
 				int rnumint = Integer.parseInt(rnum);
 				robotNumbers.add(rnumint);
@@ -343,18 +364,7 @@ public class CompareSTAPUSSINVI {
 				int gnumint = Integer.parseInt(gnum);
 				goalNumbers.add(gnumint);
 			}
-// 			robotNumbers.add(6);
-//			robotNumbers.add(4);
-//			robotNumbers.add(1);
-//			robotNumbers.add(0);
-//			goalNumbers.add(0);
-//			goalNumbers.add(5);
-//			goalNumbers.add(1);
-//			goalNumbers.add(7);
-//			goalNumbers.add(3);
-//			goalNumbers.add(2);
-//			goalNumbers.add(4);
-//			goalNumbers.add(6);
+
 		}
 		int[] rgdf;
 		if (hasGridData)
@@ -365,16 +375,38 @@ public class CompareSTAPUSSINVI {
 			results.get(fn).put(rgdf, new ArrayList<float[][]>());
 		float[][] resArr = new float[2][6];
 		resString += "\nR:" + r + "\tG:" + g;
+		resString += "R:" + robotNumbers.toString() + " G:" + goalNumbers.toString();
 
-		resString += doCompare(dir, fn, r, numFS, g, numDoors, resArr, robotNumbers, goalNumbers, true, justSTAPU,
-				justSSI);
-		results.get(fn).get(rgdf).add(resArr);
+		try {
+			errorString += resString;
+			resString += doCompare(dir, fn, r, numFS, g, numDoors, resArr, robotNumbers, goalNumbers, true, justSTAPU,
+					justSSI);
+			if (writeToFile) {
+				String resname = fn + "r" + r + robotNumbers.toString() + "g" + g + goalNumbers.toString() + "fs"
+						+ numFS + "_d_" + numDoors + "_";
+				this.printResults(resSavePlace + resname, hasGridData);
+			} else {
+				results.get(fn).get(rgdf).add(resArr);
 
-		printResults(hasGridData);
+				printResults(hasGridData);
+			}
+		} catch (Exception e) {
+			errorString += "\n" + getStackTraceString(e);
+			System.out.print("Error");
+			System.out.println(errorString);
+
+			if (writeToFile) {
+				errors.add(errorString);
+
+				writeErrors(resSavePlace + fn + "r" + r + robotNumbers.toString() + "g" + g + goalNumbers.toString()
+						+ "fs" + numFS + "_d_" + numDoors + "_" + "_errors.txt");
+			}
+		}
+
 	}
 
 	public void singleTests() throws Exception {
-		doDebug = true;//false;
+		doDebug = true;// false;
 		this.reallocSSIOnFirstDeadend = true;
 		this.reallocSTAPUOnFirstDeadend = false;// true;
 
@@ -383,8 +415,8 @@ public class CompareSTAPUSSINVI {
 		this.stapuNoReallocs = false;
 		this.ssiNoReallocs = false;
 
-		boolean justSTAPU = false;//true;
-		boolean justSSI = true;//false;
+		boolean justSTAPU = false;// true;
+		boolean justSSI = true;// false;
 
 		String dir = testDirBaseLoc;//
 //		single warehouse/ depotShelf_r10_g10_fs111_fsp_90.0_0_ 3,9,6,4,1,0,8,2 4,9,5,6
@@ -401,7 +433,6 @@ public class CompareSTAPUSSINVI {
 		fn = "sh2_r10_g10_a1_fs0_fsp_0_7_d_3_";
 //		sh2_r10_g10_a1_fs0_fsp_0_7_d_3_
 //		r:4 [8, 4, 1, 5] g:5 [8, 1, 0, 3]
-
 
 		boolean hasGridData = false;// true;
 		int gridV = 5;
@@ -423,8 +454,8 @@ public class CompareSTAPUSSINVI {
 		} else {
 			robotNumbers = new ArrayList<Integer>();
 			goalNumbers = new ArrayList<Integer>();
-			int[] rnums = new int[] {8, 4, 1, 5};
-			int[] gnums = new int[] { 8, 1, 0, 3};
+			int[] rnums = new int[] { 8, 4, 1, 5 };
+			int[] gnums = new int[] { 8, 1, 0, 3 };
 			r = rnums.length;
 			g = gnums.length + 1;
 			for (int rnum : rnums)
@@ -477,9 +508,12 @@ public class CompareSTAPUSSINVI {
 		this.reallocSTAPUOnFirstDeadend = false;
 		this.ssiNoReallocs = false;
 		this.stapuNoReallocs = false;
+		alphastarttime = System.currentTimeMillis();
+		System.out.println("Running STAPU SSI comparision scripts!");
 		try {
 			String option = args[0];
 
+		
 //			if (option.contains(options[0]))
 //				System.out.println("Not implemented");
 //				runRobots("");
@@ -502,7 +536,13 @@ public class CompareSTAPUSSINVI {
 					String fn = args[2];
 					String rnums = args[3];
 					String gnums = args[4];
-					singleTests(scen, fn, rnums, gnums);
+					String fsval = args[5];
+					String dval = args[6];
+					String isgrid = args[7];
+					String writelogs = args[8];
+					boolean writeToFile = Boolean.parseBoolean(writelogs);
+//					String scenario, String fntodo, String rnums, String gnums, String fsval,String dval,String isgrid,boolean writeToFile
+					singleTests(scen, fn, rnums, gnums, fsval, dval, isgrid, writeToFile);
 				} else {
 					singleTests();
 				}
@@ -530,7 +570,9 @@ public class CompareSTAPUSSINVI {
 					torun = args[1];
 				}
 				if (torun.contains("doors"))
+				{
 					runStrangeHouseDoors();
+				}
 				else
 					runStrangeHouse(torun);
 
@@ -553,7 +595,28 @@ public class CompareSTAPUSSINVI {
 				}
 				runGrid11Fixed(gridVal);
 			} else if (option.contains(options[13])) {
-				runWarehouseDoors(1, "");
+				{
+					int num = 1; 
+					int sd = 1; 
+					int ed = 6; 
+					if(args.length>1)
+					{
+						num = Integer.parseInt(args[1]);
+						if(args.length>2)
+						{
+							System.out.println(Arrays.toString(args));
+							if(args[2]!="" && !args[2].contains(options[13])) {
+							sd = Integer.parseInt(args[2]); 
+							if(args.length>3)
+							{
+								if(args[3]!="" &&  !args[3].contains(options[13]))
+								ed = Integer.parseInt(args[3]);
+							}
+							}
+						}
+					}
+				runWarehouseDoors(num, "",sd,ed);
+				}
 			} else {
 				System.out.println("invalid option, options are: " + Arrays.toString(options));
 				System.out.println("Format for " + options[9] + ": " + options[9] + " ," + options[9] + " r,"
@@ -655,7 +718,15 @@ public class CompareSTAPUSSINVI {
 	}
 
 	private void fileText(String fn, int maxFiles, int testNum) {
+		alphadur = System.currentTimeMillis()-alphastarttime; 
+		long avgTime = alphadur/testNum; 
+		long expTime = avgTime* (maxFiles-testNum);
+		if(expTime < 0)
+			expTime = expTime*-1;
 		System.out.println("***************************************************************");
+		System.out.println("Elapsed Time "+TimeUnit.MINUTES.convert(alphadur, TimeUnit.MILLISECONDS)+" min "); 
+		System.out.println("Expected End Time for remaining tests "+TimeUnit.MINUTES.convert(expTime, TimeUnit.MILLISECONDS)); 
+		System.out.println("Average test time "+TimeUnit.MINUTES.convert(avgTime, TimeUnit.MILLISECONDS)); 
 		System.out.println(testNum + " / " + maxFiles + ": " + (((float) testNum / (float) maxFiles) * 100.0));
 		System.out.println(fn);
 		System.out.println("***************************************************************");
@@ -851,35 +922,45 @@ public class CompareSTAPUSSINVI {
 		}
 	}
 
-	private void runWarehouseDoors(int tnum, String fnSuffix) {
-		String fnPrefix = "shelfDepot_r10_g10_a1_";
+	private void runWarehouseDoors(int tnum, String fnSuffix,int startDoor,int endDoor) {
+		String fnPrefix = "smallShelpDepot_r10_g10_a1_";
 
 		int[] fsShelfDepot;
 		String[] fsPercentageStrings;
 
+		int[] smallfs = new int[] { 90 };
+		String[] smallfspercentagestrings = new String[] { "90" };
 		fsShelfDepot = new int[] { /* 0, 62, */ 110 };
+
 		fsPercentageStrings = new String[] { /* "0", "50", */ "90" };
 
 		String fsBit = "fs";
 
 		if (tnum == 0)
-			runWarehouseDoors(fnPrefix, fsShelfDepot, fsPercentageStrings, fsBit, fnSuffix);
-		fnPrefix = "depotShelf_r10_g10_a1_";
+			runWarehouseDoors(fnPrefix, smallfs, smallfspercentagestrings, fsBit, fnSuffix,startDoor,endDoor);
+		fnPrefix = "smallDepotShelf_r10_g10_a1_";
 		if (tnum == 1)
-			runWarehouseDoors(fnPrefix, fsShelfDepot, fsPercentageStrings, fsBit, fnSuffix);
-		fnPrefix = "whfree_r10_g10_a1_";
+			runWarehouseDoors(fnPrefix, smallfs, smallfspercentagestrings, fsBit, fnSuffix,startDoor,endDoor);
+		fnPrefix = "smallWarehousefree_r10_g10_a1_";
 		if (tnum == 2)
-			runWarehouseDoors(fnPrefix, fsShelfDepot, fsPercentageStrings, fsBit, fnSuffix);
+			runWarehouseDoors(fnPrefix, smallfs, smallfspercentagestrings, fsBit, fnSuffix,startDoor,endDoor);
 	}
 
 	private void runWarehouseDoors(String fnPrefix, int[] fsShelfDepot, String[] fspStrings, String fsBit,
-			String fnSuffix) {
+			String fnSuffix,int startDoor, int endDoor) {
 		boolean hasGridData = false;
 		String dir = testDirBaseLoc + "warehousedoors/";
 
 		int numRobots = 10;
 		int numGoals = 11;
-		int[] doorsarray = new int[] { 1, 2, 3 ,4,5,6};
+		int doorarraylen = endDoor - startDoor +1; 
+		int[] doorsarray = new int[doorarraylen]; //{ 1, 2, 3, 4, 5, 6 };
+		
+		for(int i = startDoor,j=0; i<=endDoor; i++,j++)
+		{
+			doorsarray[j]=i; 
+		}
+		System.out.println("Running for doors "+Arrays.toString(doorsarray));
 		String fn = "";
 
 		String resString = "";
@@ -899,13 +980,12 @@ public class CompareSTAPUSSINVI {
 			for (int j = 0; j < garr.length; j++) {
 				g = garr[j];
 				for (int numDoors : doorsarray) {
-				for (int fsNum = 0; fsNum < fsShelfDepot.length; fsNum++) {
+					for (int fsNum = 0; fsNum < fsShelfDepot.length; fsNum++) {
 
-					int fs = fsShelfDepot[fsNum];
+						int fs = fsShelfDepot[fsNum];
 
-					for (int fileForFS = fileForFSstart; fileForFS < numFilesPerFS; fileForFS++) {
+						for (int fileForFS = fileForFSstart; fileForFS < numFilesPerFS; fileForFS++) {
 
-						
 							fn = fnPrefix + fsBit + fs + "_fsp_" + fspStrings[fsNum] + "_" + fileForFS + "_d_"
 									+ numDoors + "_";
 
@@ -946,7 +1026,7 @@ public class CompareSTAPUSSINVI {
 								errors.add(errorString);
 								if (results.containsKey(currentErrorfn))
 									results.remove(currentErrorfn);
-								writeErrors(resSavePlace + "wh_r" + r + "g" + g + "fs"  + "_" + fs+ "_d_" + numDoors
+								writeErrors(resSavePlace + "wh_r" + r + "g" + g + "fs" + "_" + fs + "_d_" + numDoors
 										+ "_" + fnPrefix + fnSuffix + "_errors.txt");
 								e.printStackTrace();
 
@@ -1526,7 +1606,7 @@ public class CompareSTAPUSSINVI {
 			gnums = new int[] { 9/* 3, 5, 7, 9, 11 */ };
 			fsnums = new int[] { 50 };// { 0, 50, 90 };
 			fsvals = new int[] { 61 };// { 0, 61, 109 };
-			fnnumStart = 5;
+	
 
 			extraText = "r4_gall_fs50_some";
 			if (fnnumStart != 0)

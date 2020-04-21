@@ -42,7 +42,7 @@ public class CompareSTAPUSSINVI {
 	boolean stapuNoReallocs = false;
 	boolean ssiNoReallocs = false;
 	
-	float defaultProbThresh = 1e-3; 
+	float defaultProbThresh = 0;//1e-3; 
 
 	boolean donullml = true;
 	String resSavePlace = "/data/private/fxf603/code/prism-svn/prism/tests/resultsSummary/";// "/home/fatma/Data/PhD/code/stapussi_prelim/xkcdStyle/data/";

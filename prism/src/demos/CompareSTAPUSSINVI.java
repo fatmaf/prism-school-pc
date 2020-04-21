@@ -41,6 +41,8 @@ public class CompareSTAPUSSINVI {
 	boolean reallocSSIOnFirstDeadend = true;
 	boolean stapuNoReallocs = false;
 	boolean ssiNoReallocs = false;
+	
+	float defaultProbThresh = 1e-3; 
 
 	boolean donullml = true;
 	String resSavePlace = "/data/private/fxf603/code/prism-svn/prism/tests/resultsSummary/";// "/home/fatma/Data/PhD/code/stapussi_prelim/xkcdStyle/data/";
@@ -121,6 +123,7 @@ public class CompareSTAPUSSINVI {
 		stapu.debugSTAPU = doDebug;
 		stapu.doSeqPolicyBuilding = this.doSeqSTAPUPolicy;
 		stapu.noreallocations = this.stapuNoReallocs;
+		stapu.probThresh = this.defaultProbThresh;
 		double[] resHere = stapu.runGUISimpleTestsOne(dir, fn, numRobots, numFS, numGoals, numDoors, robotNumbers,
 				goalNumbers, reallocOnFirstRobotDeadend, fileLog, mlfn, excludeRobotInitStates);
 		// System.out.println(res.toString());
@@ -139,6 +142,7 @@ public class CompareSTAPUSSINVI {
 		SSIAuctionNestedProduct ssi = new SSIAuctionNestedProduct();
 		ssi.debugSSI = doDebug;
 		ssi.doingReallocs = !this.ssiNoReallocs;
+		ssi.probThresh = this.defaultProbThresh;
 		double[] ssires = ssi.run(dir, fn, numRobots, numGoals, numDoors, robotNumbers, goalNumbers,
 				reallocOnFirstRobotDeadend, fileLog, mainLogFile);
 		// System.out.println(res.toString());

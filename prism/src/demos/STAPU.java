@@ -59,6 +59,8 @@ public class STAPU {
 	public long stapuFirstSolDuration = 0;
 	public long stapuAllReplanningDuration = 0;
 
+	public float probThresh = 1e-5f; 
+	
 	public STAPU() {
 		String dir = System.getProperty("user.dir");
 		saveplace = dir + saveplace_suffix;
@@ -429,6 +431,7 @@ public class STAPU {
 				Entry<State, Double> stateToExploreProbPair = stateToExploreAndBitSet.getKey();
 				State stateToExplore = stateToExploreProbPair.getKey();
 				double stateToExploreProb = stateToExploreProbPair.getValue();
+				
 				BitSet statesToAvoid = stateToExploreAndBitSet.getValue();
 
 				// TODO:your code here
@@ -439,6 +442,13 @@ public class STAPU {
 				fileLog.println("Replanning inits: " + getTimeString(runTimer));
 
 				fileLog.println("Time so far: " + getTimeString(stapuTimeDuration + runningTimer));
+				if (stateToExploreProb < this.probThresh)
+				{
+					fileLog.println("Skipping state "+stateToExplore.toString()+" with prob "+stateToExploreProb+ " < "+probThresh);
+					mainLog.println("Skipping state "+stateToExplore.toString()+" with prob "+stateToExploreProb+ " < "+probThresh);
+					
+					continue; 
+				}
 				if (!jointPolicyBuilder.inStatesExplored(stateToExplore)) {
 					startTimer = System.currentTimeMillis();
 					// get first failed robot

@@ -60,6 +60,7 @@ public class STAPU {
 	public long stapuAllReplanningDuration = 0;
 
 	public float probThresh = 1e-5f; 
+	public long maxRunTimems = 60*60*1000; // 1 hour // 0 to do full 
 	
 	public STAPU() {
 		String dir = System.getProperty("user.dir");

@@ -42,8 +42,9 @@ public class CompareSTAPUSSINVI {
 	boolean stapuNoReallocs = false;
 	boolean ssiNoReallocs = false;
 	
-	float defaultProbThresh = 0;//1e-3; 
+	float defaultProbThresh = 0;//1e-3; //set to 0 do full 
 
+	long maxRunTimems =60*60*1000; //1hour //set to zero to do full 
 	boolean donullml = true;
 	String resSavePlace = "/data/private/fxf603/code/prism-svn/prism/tests/resultsSummary/";// "/home/fatma/Data/PhD/code/stapussi_prelim/xkcdStyle/data/";
 	String testDirBaseLoc = "/data/private/fxf603/code/prism-svn/prism/tests/";// "/home/fatma/Data/PhD/code/prism_ws/prism-svn/prism/tests/wkspace/";
@@ -124,6 +125,7 @@ public class CompareSTAPUSSINVI {
 		stapu.doSeqPolicyBuilding = this.doSeqSTAPUPolicy;
 		stapu.noreallocations = this.stapuNoReallocs;
 		stapu.probThresh = this.defaultProbThresh;
+		stapu.maxRunTimems = this.maxRunTimems; 
 		double[] resHere = stapu.runGUISimpleTestsOne(dir, fn, numRobots, numFS, numGoals, numDoors, robotNumbers,
 				goalNumbers, reallocOnFirstRobotDeadend, fileLog, mlfn, excludeRobotInitStates);
 		// System.out.println(res.toString());
@@ -143,6 +145,7 @@ public class CompareSTAPUSSINVI {
 		ssi.debugSSI = doDebug;
 		ssi.doingReallocs = !this.ssiNoReallocs;
 		ssi.probThresh = this.defaultProbThresh;
+		ssi.maxRunTimems = this.maxRunTimems;
 		double[] ssires = ssi.run(dir, fn, numRobots, numGoals, numDoors, robotNumbers, goalNumbers,
 				reallocOnFirstRobotDeadend, fileLog, mainLogFile);
 		// System.out.println(res.toString());

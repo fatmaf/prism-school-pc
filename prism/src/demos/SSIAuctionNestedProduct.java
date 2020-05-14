@@ -68,7 +68,8 @@ public class SSIAuctionNestedProduct
 	public long firstSolDuration = 0;
 	public long allReplanningDuration = 0;
 	public float probThresh = 1e-5f; 
-
+	public long maxRunTimems = 60*60*1000; // 1 hour // 0 to do full 
+	
 	public ArrayList<MDPRewardsSimple> createMaxExpTaskRewStruct(SingleAgentNestedProductMDP saMDP, MDPRewardsSimple costsModel)
 	{
 		ArrayList<MDPRewardsSimple> rewards = new ArrayList<MDPRewardsSimple>();

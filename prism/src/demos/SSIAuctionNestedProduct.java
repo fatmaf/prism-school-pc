@@ -909,6 +909,15 @@ fileLog.println("Bid MDP size:\n"+npSol.getKey().finalProduct.getProductModel().
 			fileLog.println("Time so far: " + getTimeString(totalTimeDuration));
 			fileLog.println("XXX,D,"+System.currentTimeMillis());
 			fileLog.println("JP MC:\n"+mdpCreator.mdp.infoStringTable());
+			if(this.maxRunTimems > 0)
+			{
+				ModelCheckerMultipleResult nviSol = computeNestedValIterFailurePrint(mcs.get(0), mdpCreator.mdp, mdpCreator.accStates, new BitSet(),
+						mdpCreator.getRewardsInArray(), 0, true, prism, mainLog);
+				results = resultValues(nviSol, mdpCreator.mdp, null);
+				fileLog.println("Soln0: "+Arrays.toString(results)+" : "+System.currentTimeMillis());
+
+
+			}
 			if (doingReallocs) {
 				startTime = System.currentTimeMillis();
 				processReallocations(numRobots, taskSet, remainingTasks, correspondingMDPInitialStates, correspondingJointStates, productMDPs, mdps, jvlTosvl,
@@ -1074,6 +1083,16 @@ fileLog.println("Bid MDP size:\n"+npSol.getKey().finalProduct.getProductModel().
 								jvlTosvl, currentMDPInitialStates, mainLog, reallocStatesPQ, reallocStatesMapToList);
 						fileLog.println("XXX,D,"+System.currentTimeMillis());
 						fileLog.println("JP MC:\n"+mdpCreator.mdp.infoStringTable());
+						if(this.maxRunTimems > 0)
+						{
+							ModelCheckerMultipleResult nviSol = computeNestedValIterFailurePrint(mcs.get(0), mdpCreator.mdp, mdpCreator.accStates, new BitSet(),
+									mdpCreator.getRewardsInArray(), 0, true, prism, mainLog);
+							results = resultValues(nviSol, mdpCreator.mdp, null);
+							fileLog.println("Soln"+numPlanning+": "+Arrays.toString(results)+" : "+System.currentTimeMillis());
+
+
+						}
+
 					}
 					stopTime = System.currentTimeMillis();
 					runTime = stopTime - startTime;
@@ -1118,6 +1137,7 @@ fileLog.println("Bid MDP size:\n"+npSol.getKey().finalProduct.getProductModel().
 		fileLog.println("Final Clean up: " + getTimeString(runTime));
 		fileLog.println("Time so far: " + getTimeString(totalTimeDuration));
 		fileLog.println("XXX,F,"+System.currentTimeMillis());
+		if (numStatesSkipped > 0)
 		fileLog.println("Skipped "+numStatesSkipped+" states with prob less than "+probThresh);
 		return results;
 	}
@@ -1327,6 +1347,7 @@ fileLog.println("Bid MDP size:\n"+npSol.getKey().finalProduct.getProductModel().
 			}
 			//			mainLog.println("\nFor p = " + maxProb + ", rewards " + resString);
 			if (fileLog != null) {
+				
 				fileLog.println("\nFor p = " + maxProb + ", rewards " + resString);
 			}
 		}

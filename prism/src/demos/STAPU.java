@@ -415,6 +415,20 @@ public class STAPU {
 
 		fileLog.println("XXX,D," + System.currentTimeMillis());
 		fileLog.println("Policy MC:\n " + jointPolicyBuilder.jointMDP.infoStringTable());
+		if(this.maxRunTimems > 0)
+		{
+			jointPolicyBuilder.createRewardStructures();
+			finalRewards = jointPolicyBuilder.getExpTaskAndCostRewards();
+			jointPolicyBuilder.jointMDP.findDeadlocks(true);
+
+			result = computeNestedValIterFailurePrint(jointPolicyBuilder.jointMDP, jointPolicyBuilder.accStates,
+					new BitSet(), finalRewards, minRewards, probPreference, null);
+			double[] results = resultValues(result, jointPolicyBuilder.jointMDP);
+			fileLog.println("Soln0: "+Arrays.toString(results)+" : "+System.currentTimeMillis());
+
+
+		}
+
 		// startTime = System.currentTimeMillis();
 
 		// stopTime = System.currentTimeMillis();
@@ -535,6 +549,19 @@ public class STAPU {
 					fileLog.println("Joint Policy Building: " + getTimeString(runTimer));
 					runningTimer += runTimer;
 					fileLog.println("Time so far: " + getTimeString(stapuTimeDuration + runningTimer));
+					if(this.maxRunTimems > 0)
+					{
+						jointPolicyBuilder.createRewardStructures();
+						finalRewards = jointPolicyBuilder.getExpTaskAndCostRewards();
+						jointPolicyBuilder.jointMDP.findDeadlocks(true);
+
+						result = computeNestedValIterFailurePrint(jointPolicyBuilder.jointMDP, jointPolicyBuilder.accStates,
+								new BitSet(), finalRewards, minRewards, probPreference, null);
+						double[] results = resultValues(result, jointPolicyBuilder.jointMDP);
+						fileLog.println("Soln"+numPlanning+": "+Arrays.toString(results)+" : "+System.currentTimeMillis());
+
+
+					}
 
 				}
 			}

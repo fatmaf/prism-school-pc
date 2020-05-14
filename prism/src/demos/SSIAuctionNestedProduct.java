@@ -68,6 +68,7 @@ public class SSIAuctionNestedProduct
 	public long firstSolDuration = 0;
 	public long allReplanningDuration = 0;
 	public float probThresh = 1e-5f; 
+    public int numStatesSkipped = 0; 
 	public long maxRunTimems = 60*60*1000; // 1 hour // 0 to do full 
 	
 	public ArrayList<MDPRewardsSimple> createMaxExpTaskRewStruct(SingleAgentNestedProductMDP saMDP, MDPRewardsSimple costsModel)
@@ -952,6 +953,7 @@ fileLog.println("Bid MDP size:\n"+npSol.getKey().finalProduct.getProductModel().
 					
 					if (stateProb < probThresh)
 					{
+					    numStatesSkipped++;
 						mainLog.println("Skipping state "+ps.toString()+" with prob "+stateProb+ " < "+probThresh);
 						fileLog.println("Skipping state "+ps.toString()+" with prob "+stateProb+ " < "+probThresh);
 						
@@ -1116,7 +1118,7 @@ fileLog.println("Bid MDP size:\n"+npSol.getKey().finalProduct.getProductModel().
 		fileLog.println("Final Clean up: " + getTimeString(runTime));
 		fileLog.println("Time so far: " + getTimeString(totalTimeDuration));
 		fileLog.println("XXX,F,"+System.currentTimeMillis());
-		
+		fileLog.println("Skipped "+numStatesSkipped+" states with prob less than "+probThresh);
 		return results;
 	}
 

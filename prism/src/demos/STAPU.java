@@ -428,7 +428,15 @@ public class STAPU {
 
 
 		}
+		if (this.maxRunTimems>0)
+		{
+			if (System.currentTimeMillis() > this.maxRunTimems)
+			{
+				fileLog.println("Timed Out" +System.currentTimeMillis());
 
+				noReallocs = true;
+			}
+		}
 		// startTime = System.currentTimeMillis();
 
 		// stopTime = System.currentTimeMillis();
@@ -564,6 +572,15 @@ public class STAPU {
 					}
 
 				}
+				if (this.maxRunTimems>0)
+				{
+					if (System.currentTimeMillis() > this.maxRunTimems)
+					{
+						fileLog.println("Timed Out" +System.currentTimeMillis());
+
+						break; 
+					}
+				}
 			}
 
 			// jointPolicyBuilder.saveJointPolicyMDP();
@@ -615,6 +632,7 @@ public class STAPU {
 		fileLog.println("Time so far without timer: " + getTimeString(stapuTimeDuration));
 		fileLog.println("XXX,E," + System.currentTimeMillis());
 		fileLog.println("Policy MC:\n " + jointPolicyBuilder.jointMDP.infoStringTable());
+		if (numStatesSkipped>0)
 		fileLog.println("Skipped "+numStatesSkipped+" states with prob less than "+probThresh);
 		// end profiling
 		return results;

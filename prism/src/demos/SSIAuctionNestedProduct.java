@@ -918,6 +918,15 @@ fileLog.println("Bid MDP size:\n"+npSol.getKey().finalProduct.getProductModel().
 
 
 			}
+			if (this.maxRunTimems>0)
+			{
+				if (System.currentTimeMillis() > this.maxRunTimems)
+				{
+					fileLog.println("Timed Out" +System.currentTimeMillis());
+
+					doingReallocs = false; 
+				}
+			}
 			if (doingReallocs) {
 				startTime = System.currentTimeMillis();
 				processReallocations(numRobots, taskSet, remainingTasks, correspondingMDPInitialStates, correspondingJointStates, productMDPs, mdps, jvlTosvl,
@@ -1093,6 +1102,7 @@ fileLog.println("Bid MDP size:\n"+npSol.getKey().finalProduct.getProductModel().
 
 						}
 
+
 					}
 					stopTime = System.currentTimeMillis();
 					runTime = stopTime - startTime;
@@ -1101,8 +1111,18 @@ fileLog.println("Bid MDP size:\n"+npSol.getKey().finalProduct.getProductModel().
 					totalTimeDuration += runTime;
 					fileLog.println("Joint Policy Building: " + getTimeString(runTime));
 					fileLog.println("Time so far: " + getTimeString(totalTimeDuration));
+					if (this.maxRunTimems>0)
+					{
+						if (System.currentTimeMillis() > this.maxRunTimems)
+						{
+							fileLog.println("Timed Out" +System.currentTimeMillis());
+
+							break; 
+						}
+					}
 
 				}
+				
 			}
 			allReplanningDuration = totalTimeDuration - firstSolDuration;
 			startTime = System.currentTimeMillis();

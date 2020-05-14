@@ -60,6 +60,7 @@ public class STAPU {
 	public long stapuAllReplanningDuration = 0;
 
 	public float probThresh = 1e-5f; 
+    public int numStatesSkipped = 0; 
 	
 	public STAPU() {
 		String dir = System.getProperty("user.dir");
@@ -444,6 +445,7 @@ public class STAPU {
 				fileLog.println("Time so far: " + getTimeString(stapuTimeDuration + runningTimer));
 				if (stateToExploreProb < this.probThresh)
 				{
+				    numStatesSkipped++;
 					fileLog.println("Skipping state "+stateToExplore.toString()+" with prob "+stateToExploreProb+ " < "+probThresh);
 					mainLog.println("Skipping state "+stateToExplore.toString()+" with prob "+stateToExploreProb+ " < "+probThresh);
 					
@@ -585,6 +587,7 @@ public class STAPU {
 		fileLog.println("Time so far without timer: " + getTimeString(stapuTimeDuration));
 		fileLog.println("XXX,E," + System.currentTimeMillis());
 		fileLog.println("Policy MC:\n " + jointPolicyBuilder.jointMDP.infoStringTable());
+		fileLog.println("Skipped "+numStatesSkipped+" states with prob less than "+probThresh);
 		// end profiling
 		return results;
 

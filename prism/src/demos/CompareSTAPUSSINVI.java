@@ -42,7 +42,7 @@ public class CompareSTAPUSSINVI {
 	boolean stapuNoReallocs = false;
 	boolean ssiNoReallocs = false;
 	
-	float defaultProbThresh = 0;//1e-3; 
+	float defaultProbThresh = 1e-2f; 
 
 	boolean donullml = true;
 	String resSavePlace = "/data/private/fxf603/code/prism-svn/prism/tests/resultsSummary/";// "/home/fatma/Data/PhD/code/stapussi_prelim/xkcdStyle/data/";
@@ -254,14 +254,18 @@ public class CompareSTAPUSSINVI {
 		if (robotNumbers != null && goalNumbers != null)
 			System.out.println(
 					"R:" + numRobots + "-" + robotNumbers.toString() + " G:" + numGoals + " " + goalNumbers.toString());
-		float[] ssiRes = null;
-		if (!justSTAPU)
-			ssiRes = doSSITime(dir, fn, numRobots, numGoals, numFS, numDoors, robotNumbers, goalNumbers, logSuffix,
-					nullML, resArr);
+
+
+
+
 		float[] stapuRes = null;
 		if (!justSSI)
 			stapuRes = doSTAPUTime(dir, fn, numRobots, numGoals, numFS, numDoors, robotNumbers, goalNumbers, logSuffix,
 					nullML, resArr);
+
+		float[] ssiRes = null;
+		if (!justSTAPU)
+			ssiRes = doSSITime(dir, fn, numRobots, numGoals, numFS, numDoors, robotNumbers, goalNumbers, logSuffix,					nullML, resArr);
 
 		if (!justSTAPU)
 			resString += "\nSSI Res: " + Arrays.toString(ssiRes);
@@ -513,7 +517,8 @@ public class CompareSTAPUSSINVI {
 		this.ssiNoReallocs = false;
 		this.stapuNoReallocs = false;
 		alphastarttime = System.currentTimeMillis();
-		System.out.println("Running STAPU SSI comparision scripts!");
+		System.out.println("Running STAPU SSI comparision scripts! on school pc ");
+System.out.println("Setting default prob thresh to :"+defaultProbThresh);
 		try {
 			String option = args[0];
 

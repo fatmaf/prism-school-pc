@@ -757,6 +757,7 @@ fileLog.println("Bid MDP size:\n"+npSol.getKey().finalProduct.getProductModel().
 		fileLog.println("XXX,-A,"+System.currentTimeMillis());
 		////profile
 		long startTime = System.currentTimeMillis();
+		long superStartTime = startTime; //just so I can do the time stuff 
 		long stopTime;
 		long runTime;
 		double[] results = null;
@@ -920,9 +921,11 @@ fileLog.println("Bid MDP size:\n"+npSol.getKey().finalProduct.getProductModel().
 			}
 			if (this.maxRunTimems>0)
 			{
-				if (System.currentTimeMillis() > this.maxRunTimems)
+				long timesofar = System.currentTimeMillis() - superStartTime;
+				if ( timesofar> this.maxRunTimems)
 				{
-					fileLog.println("Timed Out" +System.currentTimeMillis());
+					fileLog.println("Timed Out " +timesofar);
+
 
 					doingReallocs = false; 
 				}
@@ -1113,9 +1116,10 @@ fileLog.println("Bid MDP size:\n"+npSol.getKey().finalProduct.getProductModel().
 					fileLog.println("Time so far: " + getTimeString(totalTimeDuration));
 					if (this.maxRunTimems>0)
 					{
-						if (System.currentTimeMillis() > this.maxRunTimems)
+						long timesofar = System.currentTimeMillis() - superStartTime;
+						if ( timesofar> this.maxRunTimems)
 						{
-							fileLog.println("Timed Out" +System.currentTimeMillis());
+							fileLog.println("Timed Out " +timesofar);
 
 							break; 
 						}

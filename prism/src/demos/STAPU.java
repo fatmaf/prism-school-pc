@@ -61,6 +61,7 @@ public class STAPU {
 
 	public float probThresh = 1e-5f; 
 	public long maxRunTimems = 60*60*1000; // 1 hour // 0 to do full 
+	long superStartTime = 0; //just for the time thresholding 
     public int numStatesSkipped = 0; 
 	
 	public STAPU() {
@@ -430,9 +431,10 @@ public class STAPU {
 		}
 		if (this.maxRunTimems>0)
 		{
-			if (System.currentTimeMillis() > this.maxRunTimems)
+			long timesofar = System.currentTimeMillis() -superStartTime;
+			if (timesofar> this.maxRunTimems)
 			{
-				fileLog.println("Timed Out" +System.currentTimeMillis());
+				fileLog.println("Timed Out " +timesofar);
 
 				noReallocs = true;
 			}
@@ -574,9 +576,10 @@ public class STAPU {
 				}
 				if (this.maxRunTimems>0)
 				{
-					if (System.currentTimeMillis() > this.maxRunTimems)
+					long timesofar = System.currentTimeMillis() -superStartTime;
+					if (timesofar> this.maxRunTimems)
 					{
-						fileLog.println("Timed Out" +System.currentTimeMillis());
+						fileLog.println("Timed Out " +timesofar);
 
 						break; 
 					}
@@ -782,6 +785,7 @@ public class STAPU {
 			ArrayList<Integer> robotNumbers, ArrayList<Integer> goalNumbers, boolean reallocateOnSingleAgentDeadend,
 			PrismLog fileLog, String mainLogfn, boolean excludeRobotInitStates) {
 		fileLog.println("XXX,-A," + System.currentTimeMillis());
+		superStartTime = System.currentTimeMillis();
 		double[] res = null;
 
 		String modelLocation = dir;

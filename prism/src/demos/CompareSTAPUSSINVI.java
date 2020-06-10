@@ -46,8 +46,8 @@ public class CompareSTAPUSSINVI {
 
 	long maxRunTimems =60*60*1000; //1hour //set to zero to do full 
 	boolean donullml = true;
-	String resSavePlace = "/data/private/fxf603/code/prism-svn/prism/tests/resultsSummary/";// "/home/fatma/Data/PhD/code/stapussi_prelim/xkcdStyle/data/";
-	String testDirBaseLoc = "/data/private/fxf603/code/prism-svn/prism/tests/";// "/home/fatma/Data/PhD/code/prism_ws/prism-svn/prism/tests/wkspace/";
+	String resSavePlace = "/tests/resultsSummary/";// "/home/fatma/Data/PhD/code/stapussi_prelim/xkcdStyle/data/";
+	String testDirBaseLoc = "/tests/";// "/home/fatma/Data/PhD/code/prism_ws/prism-svn/prism/tests/wkspace/";
 
 	String logsBaseLoc = "results/logs/";
 	String logsModLoc = logsBaseLoc;

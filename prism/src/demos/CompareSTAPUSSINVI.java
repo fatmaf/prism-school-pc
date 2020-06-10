@@ -1434,16 +1434,16 @@ System.out.println("Setting default prob thresh to :"+defaultProbThresh);
 					rnums = new int[] { 2, 4, 6, 8/* , 10 */ };
 //						rnums = new int[] { 10 };
 					gnums = new int[] { 5 };
-					fsnums = new int[] { 0, 50, 90 };
+					fsnums = new int[] { 0,/* 50,*/ 90 };
 //						fsnums = new int[] { 100 };
 					fnnumStart = 0;
-					extraText = "rall_g5_fs0_50_90";
+					extraText = "rall_g5_fs0_90";
 //						extraText = "rall_g5_fs0_50_100_r10_fs100_5onwards";
 				} else if (dogoalsonly) {
 					rnums = new int[] { 4 };
-					gnums = new int[] { 9 /* 3, 5, 7,9/* /* , 11 */ };
-					fsnums = new int[] { 90 };// { 0, 50, 90 };
-					extraText = "r4_gall_fs90";
+					gnums = new int[] {  3, 5, 7,9/* /* , 11 */ };
+					fsnums = new int[] {0, 90 };// { 0, 50, 90 };
+					extraText = "r4_gall_fs0_90";
 				} else {
 					rnums = new int[] { 4 };
 					gnums = new int[] { 5 };
@@ -1607,20 +1607,20 @@ System.out.println("Setting default prob thresh to :"+defaultProbThresh);
 		String resString;
 
 		if (dorobotsonly) {
-			rnums = new int[] { /* 2, 4, 6, */8/* , 10 */ };
+			rnums = new int[] {  2, 4, 6, 8/* , 10 */ };
 //			rnums = new int[] { 10 };
 			gnums = new int[] { 5 };
-			fsnums = new int[] { /* 0, */50, 90 };
-			fsvals = new int[] { /* 0, */ 61, 109 };
-			extraText = "rall_g5_fs_50_90";
+			fsnums = new int[] {  0, /*50,*/ 90 };
+			fsvals = new int[] {  0, /* 61,*/ 109 };
+			extraText = "rall_g5_fs_0_90";
 		} else if (dogoalsonly) {
 			rnums = new int[] { 4 };
-			gnums = new int[] { 9/* 3, 5, 7, 9, 11 */ };
-			fsnums = new int[] { 50 };// { 0, 50, 90 };
-			fsvals = new int[] { 61 };// { 0, 61, 109 };
+			gnums = new int[] {  3, 5, 7, 9/*, 11 */ };
+			fsnums = new int[] {0, 90 };// { 0, 50, 90 };
+			fsvals = new int[] {0, 109 };// { 0, 61, 109 };
 	
 
-			extraText = "r4_gall_fs50_some";
+			extraText = "r4_gall_fs0_90";
 			if (fnnumStart != 0)
 				extraText += "_" + fnnumStart;
 		} else if (dofsonly) {

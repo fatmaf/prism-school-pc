@@ -694,14 +694,14 @@ System.out.println("Setting default prob thresh to :"+defaultProbThresh);
 
 		} else if (grfs.contains("g")) {
 			if (tnum == 0) {
-				fsShelfDepot = new int[] { /* 0, 62, */ 111 };
-				fsPercentageStrings = new String[] { /* "0.0", "50.0", */ "90.0" };
+				fsShelfDepot = new int[] {  0,/* 62, */ 111 };
+				fsPercentageStrings = new String[] {  "0.0", /*"50.0", */ "90.0" };
 			} else if (tnum == 1) {
-				fsShelfDepot = new int[] { /* 0, 62, */ 111 };
-				fsPercentageStrings = new String[] { /* "0.0", "50.0", */ "90.0" };
+				fsShelfDepot = new int[] {  0,/* 62, */ 111 };
+				fsPercentageStrings = new String[] {  "0.0",/* "50.0", */ "90.0" };
 			} else {
-				fsShelfDepot = new int[] { 0/* , 62, 111 */ };
-				fsPercentageStrings = new String[] { "0"/* , "50", */ /* "90" */ };
+				fsShelfDepot = new int[] { 0/* , 62*/, 111  };
+				fsPercentageStrings = new String[] { "0"/* , "50"*/,  "90"  };
 			}
 		} else {
 			if (tnum == 0) {
@@ -821,13 +821,13 @@ System.out.println("Setting default prob thresh to :"+defaultProbThresh);
 			fnSuffix = "allfs";
 		} else if (grfs.contains("r")) {
 			logsModLoc = logsBaseLoc + "r/";
-			rarr = new int[] { /* 2, 4, 6, */ 8 };
+			rarr = new int[] {  2, 4, 6,  8 };
 			garr = new int[] { 5 };
 			fnSuffix = "allr";
 		} else if (grfs.contains("g")) {
 			logsModLoc = logsBaseLoc + "g/";
 			rarr = new int[] { 4 };
-			garr = new int[] { /* 3, 5, 7, */9 };
+			garr = new int[] {  3, 5, 7, 9 };
 			fnSuffix = "allg";
 		} else {
 			logsModLoc = logsBaseLoc + "all/";

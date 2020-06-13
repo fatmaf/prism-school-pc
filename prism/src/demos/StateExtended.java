@@ -25,6 +25,63 @@ public class StateExtended implements Comparable<StateExtended>
 		// dummy
 	}
 
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		StateExtended other = (StateExtended) obj;
+		if(this.childStateState!=null)
+		{
+			if(other.childStateState!=null)
+			{
+				if(this.childStateState == other.childStateState)
+				{
+					return true; 
+				}
+			}
+		}
+		if(this.childState == other.childState)
+		{
+			if(this.parentToChildTransitionProbability == other.parentToChildTransitionProbability)
+				return true; 
+		}
+			return false; 
+//		if (actionInChildState == null) {
+//			if (other.actionInChildState != null)
+//				return false;
+//		} else if (!actionInChildState.equals(other.actionInChildState))
+//			return false;
+//		if (childState != other.childState)
+//			return false;
+//		if (childStateRobot != other.childStateRobot)
+//			return false;
+//		if (childStateState == null) {
+//			if (other.childStateState != null)
+//				return false;
+//		} else if (!childStateState.equals(other.childStateState))
+//			return false;
+//		if (choice != other.choice)
+//			return false;
+//		if (parentState != other.parentState)
+//			return false;
+//		if (parentStateRobot != other.parentStateRobot)
+//			return false;
+//		if (Double.doubleToLongBits(parentToChildTransitionProbability) != Double.doubleToLongBits(other.parentToChildTransitionProbability))
+//			return false;
+//		if (statesToAvoid == null) {
+//			if (other.statesToAvoid != null)
+//				return false;
+//		} else if (!statesToAvoid.equals(other.statesToAvoid))
+//			return false;
+//		return true;
+	}
+
 	public StateExtended(int ps, int psr, int cs, int csr, double prob, String a)
 	{
 		parentState = ps;

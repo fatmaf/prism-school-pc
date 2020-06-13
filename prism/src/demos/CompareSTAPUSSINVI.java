@@ -413,7 +413,7 @@ public class CompareSTAPUSSINVI
 		this.stapuNoReallocs = false;
 		this.ssiNoReallocs = false;
 
-		boolean justSTAPU = true;
+		boolean justSTAPU = false;//true;
 		boolean justSSI = false;
 
 		String dir = testDirBaseLoc;//
@@ -443,8 +443,8 @@ public class CompareSTAPUSSINVI
 		boolean hasGridData = false;// true;
 		int gridV = 5;
 		String resString = "";
-		int r = 2; // numRobots;
-		int g = 2;// 9;// 3;//numGoals;
+		int r = 3; // numRobots;
+		int g = 3;// 9;// 3;//numGoals;
 		boolean doRandomRG = false;
 		if (!results.containsKey(fn))
 			results.put(fn, new HashMap<int[], ArrayList<float[][]>>());
@@ -462,8 +462,8 @@ public class CompareSTAPUSSINVI
 			goalNumbers = new ArrayList<Integer>();
 			//			R:4-[7, 9, 8, 1] G:5 [4, 5, 1, 3]
 
-			int[] rnums = new int[] { 0,1 };
-			int[] gnums = new int[] { 0,1 };
+			int[] rnums = new int[] { 0,1,2 };
+			int[] gnums = new int[] { 0,1 ,2};
 			r = rnums.length;
 			g = gnums.length + 1;
 			for (int rnum : rnums)

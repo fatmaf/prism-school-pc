@@ -27,6 +27,7 @@
 package explicit;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.AbstractMap;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -1373,21 +1374,21 @@ public class MDPModelChecker extends ProbModelChecker
 		}
 
 		//we don't need this precomputation //cuz i'm not sure if its actually helpful 
-		//		// Precomputation
-		//		timerProb0 = System.currentTimeMillis();
-		//		if (precomp && prob0) {
-		//			no = prob0(mdp, remain, target, min, strat);
-		//		} else {
-		//			no = new BitSet();
-		//		}
-		//		timerProb0 = System.currentTimeMillis() - timerProb0;
-		//		timerProb1 = System.currentTimeMillis();
-		//		if (precomp && prob1) {
-		//			yes = prob1(mdp, remain, target, min, strat);
-		//		} else {
-		//			yes = (BitSet) target.clone();
-		//		}
-		//		timerProb1 = System.currentTimeMillis() - timerProb1;
+//				// Precomputation
+//				timerProb0 = System.currentTimeMillis();
+//				if (precomp && prob0) {
+//					no = prob0(mdp, remain, target, min, strat);
+//				} else {
+//					no = new BitSet();
+//				}
+//				timerProb0 = System.currentTimeMillis() - timerProb0;
+//				timerProb1 = System.currentTimeMillis();
+//				if (precomp && prob1) {
+//					yes = prob1(mdp, remain, target, min, strat);
+//				} else {
+//					yes = (BitSet) target.clone();
+//				}
+//				timerProb1 = System.currentTimeMillis() - timerProb1;
 		no = new BitSet();
 		if (remain != null) {
 			no = (BitSet) remain.clone();
@@ -1469,6 +1470,8 @@ public class MDPModelChecker extends ProbModelChecker
 		}
 
 		double epsilon = termCritParam;
+		//		int bigDPrecision = 8; 
+		//		MathContext bigDmc = new MathContext(bigDPrecision);
 		boolean increasedE = false;
 		while (!done && iters < maxIters) {
 
@@ -1506,36 +1509,77 @@ public class MDPModelChecker extends ProbModelChecker
 						for (int rew = 0; rew < numRewards; rew++) {
 
 							boolean isBetter = false;
-							if (minRewards.get(rew)) {
-								// minimise reward
-								if (currentCostVal.get(rew) < solnReward.get(rew)[i]) {
-									isBetter = true;
+							if (!increasedE) {
+								if (minRewards.get(rew)) {
+									// minimise reward
+									if (currentCostVal.get(rew) < solnReward.get(rew)[i]) {
+										isBetter = true;
+									}
+
+								} else {
+									if (currentCostVal.get(rew) > solnReward.get(rew)[i]) {
+										isBetter = true;
+									}
+								}
+								if (isBetter) {
+									updateVals = true;
+									break;
+								} else {
+									// check if they're the same
+									sameCostVal = PrismUtils.doublesAreClose(currentCostVal.get(rew), solnReward.get(rew)[i], epsilon
+									/* termCritParam */, termCrit == TermCrit.ABSOLUTE);
+									if (!sameCostVal)
+										break;
+									// otherwise just continue
+								}
+							} else {
+								//								val1BD = BigDecimal.valueOf(val1);
+								//								val2BD = BigDecimal.valueOf(val2);
+								BigDecimal val1 = BigDecimal.valueOf(currentCostVal.get(rew));
+								BigDecimal val2 = BigDecimal.valueOf(solnReward.get(rew)[i]);
+								if (minRewards.get(rew)) {
+									if (val1.compareTo(val2) < 0)
+										isBetter = true;
+								} else {
+									if (val1.compareTo(val2) > 0)
+										isBetter = true;
 								}
 
-							} else {
-								if (currentCostVal.get(rew) > solnReward.get(rew)[i]) {
-									isBetter = true;
-								}
-							}
-							if (isBetter) {
-								updateVals = true;
-								break;
-							} else {
-								// check if they're the same
-								sameCostVal = PrismUtils.doublesAreClose(currentCostVal.get(rew), solnReward.get(rew)[i], epsilon
-								/* termCritParam */, termCrit == TermCrit.ABSOLUTE);
-								if (!sameCostVal)
+								//use Big Decimal 
+								if (isBetter) {
+									updateVals = true;
 									break;
-								// otherwise just continue
+								} else {
+									sameCostVal = (val1.compareTo(val2) == 0);
+									if (!sameCostVal)
+										break;
+								}
+
 							}
 						}
 						if (updateVals) {
+							if (iters > maxIters - 5) {
+								mainLog.println(i + "::" + solnProb[i]);
+								for (int rews = 0; rews < numRewards; rews++) {
+									mainLog.print(" rew" + rews + ":" + solnReward.get(rews)[i]);
+								}
+								mainLog.println();
+
+							}
 							solnProb[i] = currentProbVal;
 							for (int rews = 0; rews < numRewards; rews++) {
 								solnReward.get(rews)[i] = currentCostVal.get(rews);
 							}
 							strat[i] = j;
 							done = false;
+							if (iters > maxIters - 5) {
+								mainLog.println("Update: " + i + ":" + j + ":" + solnProb[i]);
+								for (int rews = 0; rews < numRewards; rews++) {
+									mainLog.print(" rew" + rews + ":" + solnReward.get(rews)[i]);
+								}
+								mainLog.println();
+
+							}
 						}
 
 					}

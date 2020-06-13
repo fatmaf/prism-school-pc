@@ -194,6 +194,8 @@ public class PolicyCreator
 		int s;
 		while (!toVisit.isEmpty()) {
 			s = toVisit.pop();
+			if(s < 0)
+				continue;
 
 			visited.set(s);
 			State sState = mdp.getStatesList().get(s);

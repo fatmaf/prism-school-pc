@@ -102,7 +102,7 @@ public class STAPU {
 		goalNumbers.add(2);
 
 		stapu.runGUISimpleTestsOne(dir, fn, maxRobots, numFS, maxGoals, numDoors, robotNumbers, goalNumbers,
-				reallocOnFirstRobotDeadend, fileLog, null, excludeRobotInitStates);
+				reallocOnFirstRobotDeadend, fileLog, null, excludeRobotInitStates,dir+"results/");
 
 		fileLog.close();
 	}
@@ -366,6 +366,20 @@ public class STAPU {
 				seqTeamMDP.agentMDPs.get(0).daList.size(), shared_vars_list, seqTeamMDP.teamMDPTemplate.getVarList(),
 				rewards, mainLog);
 
+		RewriteJointPolicyBuilder rjpb = new RewriteJointPolicyBuilder(seqTeamMDP.numRobots,
+				seqTeamMDP.agentMDPs.get(0).daList.size(), shared_vars_list, seqTeamMDP.teamMDPTemplate.getVarList(),
+				rewards, mainLog);
+		
+
+		State currentJointState=rjpb.createJointStateFromRobotStates(initialState, seqTeamMDP);
+		rjpb.buildJointPolicyFromSequentialPolicy(solution.strat, seqTeamMDP, 
+				currentJointState, reallocateOnSingleAgentDeadend, 1.0,0);
+//		int[] meh = rjpb.getRobotStatesFromJointState(rjpbis,seqTeamMDP.teamMDPWithSwitches.getStatesList());
+		//now should we do the sequential policy building? 
+		//ah but we havent done the back thing 
+		
+//		mainLog.println(rjpbis);
+		
 		if (debugSTAPU) {
 			PolicyCreator pc = new PolicyCreator();
 			pc.createPolicyWithRewardsStructuresAsLabels(seqTeamMDP.teamMDPWithSwitches.getFirstInitialState(),
@@ -376,6 +390,7 @@ public class STAPU {
 			StatesHelper.saveMDP(pc.mdpCreator.mdp, null, "", "_0_init_seqTeamPolicyRews", true);
 		}
 		jointPolicyBuilder.doSeq = doSeqPolicyBuilding;
+		
 		jointPolicyBuilder.buildJointPolicyFromSequentialPolicy(solution.strat, seqTeamMDP, initialState,
 				reallocateOnSingleAgentDeadend, 1.0);
 
@@ -610,8 +625,13 @@ public class STAPU {
 
 		if (debugSTAPU) {
 			for (int i = 0; i < planningValuesSTAPU.size(); i++) {
-				mainLog.println(i + ":" + "P:" + Arrays.toString(planningValuesSTAPU.get(i)) + " C:"
-						+ Arrays.toString(planningValuesJP.get(i)));
+				String toPrint = i + ":";
+				if(planningValuesSTAPU.get(i)!=null)
+					toPrint+= "P:" + Arrays.toString(planningValuesSTAPU.get(i));
+				if(planningValuesJP.get(i)!=null)
+					toPrint+= " C:"
+							+ Arrays.toString(planningValuesJP.get(i));
+				mainLog.println(toPrint);
 			}
 		}
 		mainLog.println("All done");
@@ -783,13 +803,13 @@ public class STAPU {
 
 	public double[] runGUISimpleTestsOne(String dir, String fn, int numRobots, int numFS, int numGoals, int numDoors,
 			ArrayList<Integer> robotNumbers, ArrayList<Integer> goalNumbers, boolean reallocateOnSingleAgentDeadend,
-			PrismLog fileLog, String mainLogfn, boolean excludeRobotInitStates) {
+			PrismLog fileLog, String mainLogfn, boolean excludeRobotInitStates,String resultsLoc) {
 		fileLog.println("XXX,-A," + System.currentTimeMillis());
 		superStartTime = System.currentTimeMillis();
 		double[] res = null;
 
 		String modelLocation = dir;
-		StatesHelper.setSavePlace(modelLocation + "results/");
+		StatesHelper.setSavePlace(resultsLoc);
 		HashMap<String, Boolean> example_has_door_list = new HashMap<String, Boolean>();
 		HashMap<String, Integer> example_num_door_list = new HashMap<String, Integer>();
 		HashMap<String, Integer> example_num_robot_list = new HashMap<String, Integer>();

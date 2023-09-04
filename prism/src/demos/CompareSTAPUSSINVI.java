@@ -46,8 +46,10 @@ public class CompareSTAPUSSINVI {
 
 	long maxRunTimems =60*60*1000; //1hour //set to zero to do full 
 	boolean donullml = true;
-    String resSavePlace = "/home/fatma/Data/PhD/code/prism-school-pc/prism/tests/resultsSummary/";//"/data/private/fxf603/code/prism-svn/prism/tests/resultsSummary/";//"/home/fatma/Data/PhD/code/stapussi_prelim/xkcdStyle/data/";
-	String testDirBaseLoc = "/home/fatma/Data/PhD/code/prism-school-pc/prism/tests/";//"/data/private/fxf603/code/prism-svn/prism/tests/";//	"/home/fatma/Data/PhD/code/prism_ws/prism-svn/prism/tests/wkspace/";
+    String resSavePlace = "/home/fatma/git/prism-me/stapu-tests/results/";
+//			"/home/fatma/Data/PhD/code/prism-school-pc/prism/tests/resultsSummary/";//"/data/private/fxf603/code/prism-svn/prism/tests/resultsSummary/";//"/home/fatma/Data/PhD/code/stapussi_prelim/xkcdStyle/data/";
+	String testDirBaseLoc = "/home/fatma/git/prism-me/stapu-tests/";
+//			"/home/fatma/Data/PhD/code/prism-school-pc/prism/tests/";//"/data/private/fxf603/code/prism-svn/prism/tests/";//	"/home/fatma/Data/PhD/code/prism_ws/prism-svn/prism/tests/wkspace/";
 
 	String logsBaseLoc = "results/logs/";
 	String logsModLoc = logsBaseLoc;
